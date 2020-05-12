@@ -3,15 +3,16 @@ package by.verishko.kefir.entity;
 import java.util.Objects;
 
 public class Location extends Entity {
+    private Integer idLocation;
     private String name;
     private String city;
 
-    public Location() {
+    public Integer getIdLocation() {
+        return idLocation;
     }
 
-    public Location(String name, String city) {
-        this.name = name;
-        this.city = city;
+    public void setIdLocation(Integer idLocation) {
+        this.idLocation = idLocation;
     }
 
     public String getName() {
@@ -36,19 +37,21 @@ public class Location extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Location location = (Location) o;
-        return Objects.equals(name, location.name) &&
-                Objects.equals(city, location.city);
+        return idLocation.equals(location.idLocation) &&
+                name.equals(location.name) &&
+                city.equals(location.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, city);
+        return Objects.hash(super.hashCode(), idLocation, name, city);
     }
 
     @Override
     public String toString() {
         return "Location{" +
-                "name='" + name + '\'' +
+                "idLocation=" + idLocation +
+                ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 '}';
     }

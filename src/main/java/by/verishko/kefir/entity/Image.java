@@ -3,17 +3,17 @@ package by.verishko.kefir.entity;
 import java.util.Objects;
 
 public class Image extends Entity {
+    private Integer idImage;
     private String name;
     private String image_path;
-    private int goods_id;
+    private int product_id;
 
-    public Image() {
+    public Integer getIdImage() {
+        return idImage;
     }
 
-    public Image(String name, String image_path, int goods_id) {
-        this.name = name;
-        this.image_path = image_path;
-        this.goods_id = goods_id;
+    public void setIdImage(Integer idImage) {
+        this.idImage = idImage;
     }
 
     public String getName() {
@@ -32,12 +32,12 @@ public class Image extends Entity {
         this.image_path = image_path;
     }
 
-    public int getGoods_id() {
-        return goods_id;
+    public int getProduct_id() {
+        return product_id;
     }
 
-    public void setGoods_id(int goods_id) {
-        this.goods_id = goods_id;
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
 
     @Override
@@ -46,22 +46,24 @@ public class Image extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Image image = (Image) o;
-        return goods_id == image.goods_id &&
-                Objects.equals(name, image.name) &&
-                Objects.equals(image_path, image.image_path);
+        return product_id == image.product_id &&
+                idImage.equals(image.idImage) &&
+                name.equals(image.name) &&
+                image_path.equals(image.image_path);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, image_path, goods_id);
+        return Objects.hash(super.hashCode(), idImage, name, image_path, product_id);
     }
 
     @Override
     public String toString() {
         return "Image{" +
-                "name='" + name + '\'' +
+                "idImage=" + idImage +
+                ", name='" + name + '\'' +
                 ", image_path='" + image_path + '\'' +
-                ", goods_id=" + goods_id +
+                ", product_id=" + product_id +
                 '}';
     }
 }

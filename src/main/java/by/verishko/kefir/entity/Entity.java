@@ -14,17 +14,11 @@ public abstract class Entity implements Serializable, Cloneable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object != null) {
-            if (object != this) {
-                if (object.getClass() == getClass() && id != null) {
-                    return id.equals(((Entity) object).id);
-                }
-                return false;
-            }
-            return true;
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return id.equals(entity.id);
     }
 
     @Override

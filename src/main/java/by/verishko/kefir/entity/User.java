@@ -1,39 +1,35 @@
 package by.verishko.kefir.entity;
 
+import by.verishko.kefir.entity.enumEntity.Role;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class User extends Entity {
-    private int role;
+    private Integer idUser;
+    private Role role;
     private String login;
     private String password;
     private String email;
-    private long phone;
+    private Long phone;
     private String name;
     private String surname;
-    private boolean status;
+    private Boolean activeStatus;
     private LocalDate date_registration;
 
-    public User() {
+    public Integer getIdUser() {
+        return idUser;
     }
 
-    public User(int role, String login, String password, String email, long phone, String name, String surname, boolean status, LocalDate date_registration) {
-        this.role = role;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.name = name;
-        this.surname = surname;
-        this.status = status;
-        this.date_registration = date_registration;
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
-    public int getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -61,11 +57,11 @@ public class User extends Entity {
         this.email = email;
     }
 
-    public long getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
@@ -85,12 +81,16 @@ public class User extends Entity {
         this.surname = surname;
     }
 
-    public boolean getStatus() {
-        return status;
+    public Boolean isActiveStatus() {
+        return activeStatus;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setActiveStatus(final Integer id) {
+        if (id == 0) {
+            this.activeStatus = false;
+        } else if (id == 1) {
+            this.activeStatus = true;
+        }
     }
 
     public LocalDate getDate_registration() {
@@ -107,35 +107,36 @@ public class User extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return role == user.role &&
-                phone == user.phone &&
-                status == user.status &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(surname, user.surname) &&
-                Objects.equals(date_registration, user.date_registration);
+        return idUser.equals(user.idUser) &&
+                role == user.role &&
+                login.equals(user.login) &&
+                password.equals(user.password) &&
+                email.equals(user.email) &&
+                phone.equals(user.phone) &&
+                name.equals(user.name) &&
+                surname.equals(user.surname) &&
+                activeStatus.equals(user.activeStatus) &&
+                date_registration.equals(user.date_registration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), role, login, password, email, phone, name, surname, status, date_registration);
+        return Objects.hash(super.hashCode(), idUser, role, login, password, email, phone, name, surname, activeStatus, date_registration);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "role=" + role +
+                "idUser=" + idUser +
+                ", role=" + role +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phone=" + phone +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", status=" + status +
+                ", activeStatus=" + activeStatus +
                 ", date_registration=" + date_registration +
                 '}';
     }
 }
-

@@ -5,23 +5,21 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Product extends Entity {
+    private Integer idProduct;
     private String name;
     private String description;
     private BigDecimal price;
     private LocalDate date_creation;
-    private int users_id;
+    private int user_id;
     private int category_id;
+    private int location_id;
 
-    public Product() {
+    public Integer getIdProduct() {
+        return idProduct;
     }
 
-    public Product(String name, String description, BigDecimal price, LocalDate date_creation, int users_id, int category_id) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.date_creation = date_creation;
-        this.users_id = users_id;
-        this.category_id = category_id;
+    public void setIdProduct(Integer idProduct) {
+        this.idProduct = idProduct;
     }
 
     public String getName() {
@@ -56,12 +54,12 @@ public class Product extends Entity {
         this.date_creation = date_creation;
     }
 
-    public int getUsers_id() {
-        return users_id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUsers_id(int users_id) {
-        this.users_id = users_id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getCategory_id() {
@@ -72,34 +70,46 @@ public class Product extends Entity {
         this.category_id = category_id;
     }
 
+    public int getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Product product = (Product) o;
-        return users_id == product.users_id &&
+        return user_id == product.user_id &&
                 category_id == product.category_id &&
-                Objects.equals(name, product.name) &&
-                Objects.equals(description, product.description) &&
-                Objects.equals(price, product.price) &&
-                Objects.equals(date_creation, product.date_creation);
+                location_id == product.location_id &&
+                idProduct.equals(product.idProduct) &&
+                name.equals(product.name) &&
+                description.equals(product.description) &&
+                price.equals(product.price) &&
+                date_creation.equals(product.date_creation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, description, price, date_creation, users_id, category_id);
+        return Objects.hash(super.hashCode(), idProduct, name, description, price, date_creation, user_id, category_id, location_id);
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "name='" + name + '\'' +
+                "idProduct=" + idProduct +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", date_creation=" + date_creation +
-                ", users_id=" + users_id +
+                ", user_id=" + user_id +
                 ", category_id=" + category_id +
+                ", location_id=" + location_id +
                 '}';
     }
 }

@@ -3,19 +3,18 @@ package by.verishko.kefir.entity;
 import java.util.Objects;
 
 public class Comment extends Entity {
+    private Integer idComment;
     private String name;
-    private String body;
-    private int users_id;
-    private int goods_id;
+    private String commentText;
+    private int user_id;
+    private int product_id;
 
-    public Comment() {
+    public Integer getIdComment() {
+        return idComment;
     }
 
-    public Comment(String name, String body, int users_id, int goods_id) {
-        this.name = name;
-        this.body = body;
-        this.users_id = users_id;
-        this.goods_id = goods_id;
+    public void setIdComment(Integer idComment) {
+        this.idComment = idComment;
     }
 
     public String getName() {
@@ -26,28 +25,28 @@ public class Comment extends Entity {
         this.name = name;
     }
 
-    public String getBody() {
-        return body;
+    public String getCommentText() {
+        return commentText;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 
-    public int getUsers_id() {
-        return users_id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUsers_id(int users_id) {
-        this.users_id = users_id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public int getGoods_id() {
-        return goods_id;
+    public int getProduct_id() {
+        return product_id;
     }
 
-    public void setGoods_id(int goods_id) {
-        this.goods_id = goods_id;
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
 
     @Override
@@ -56,24 +55,26 @@ public class Comment extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Comment comment = (Comment) o;
-        return users_id == comment.users_id &&
-                goods_id == comment.goods_id &&
-                Objects.equals(name, comment.name) &&
-                Objects.equals(body, comment.body);
+        return user_id == comment.user_id &&
+                product_id == comment.product_id &&
+                idComment.equals(comment.idComment) &&
+                name.equals(comment.name) &&
+                commentText.equals(comment.commentText);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, body, users_id, goods_id);
+        return Objects.hash(super.hashCode(), idComment, name, commentText, user_id, product_id);
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "name='" + name + '\'' +
-                ", body='" + body + '\'' +
-                ", users_id=" + users_id +
-                ", goods_id=" + goods_id +
+                "idComment=" + idComment +
+                ", name='" + name + '\'' +
+                ", commentText='" + commentText + '\'' +
+                ", user_id=" + user_id +
+                ", product_id=" + product_id +
                 '}';
     }
 }
