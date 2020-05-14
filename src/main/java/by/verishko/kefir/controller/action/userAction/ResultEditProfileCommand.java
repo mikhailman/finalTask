@@ -63,7 +63,7 @@ public class ResultEditProfileCommand extends UserAction {
         User user = new User();
         user.setName(firstName);
         user.setSurname(lastName);
-        user.setPhone(Long.valueOf(phone));
+        user.setPhone(phone);
         user.setLogin(login);
         user.setEmail(email);
         user.setPassword(password);

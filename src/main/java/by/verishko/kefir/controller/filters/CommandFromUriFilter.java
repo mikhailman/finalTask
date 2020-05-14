@@ -1,7 +1,9 @@
 package by.verishko.kefir.controller.filters;
 
 import by.verishko.kefir.controller.action.Command;
+import by.verishko.kefir.controller.action.adminAction.DisplayAllUsers;
 import by.verishko.kefir.controller.action.userAction.*;
+import by.verishko.kefir.controller.constantspath.ConstantsPath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -71,27 +73,48 @@ public class CommandFromUriFilter implements Filter {
             Command command = getCommand(actionName);
             httpRequest.setAttribute("action", command);
             chain.doFilter(request, response);
+        } else {
+            logger.error("It is impossible to process request");
+            request.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
         }
     }
 
+    /**
+     * Command builder.
+     * return command.
+     */
     private Command getCommand(String actionName) {
         switch (actionName) {
             case "/":
                 return new HomeCommand();
+
             case "/home":
                 return new HomeCommand();
+
             case "/login":
                 return new LoginCommand();
+
             case "/logout":
                 return new LogoutCommand();
+
             case "/registration":
                 return new RegistrationCommand();
+
             case "/registrationPage":
                 return new RegistrPageCommand();
+
             case "/profile":
                 return new ProfileCommand();
+
             case "/editProfile":
                 return new EditProfileCommand();
+
+            case "/displayAllUsers":
+                return new DisplayAllUsers();
+
+            case "/showProduct":
+                return new ShowProductCommand();
+
             default:
                 return new HomeCommand();
         }

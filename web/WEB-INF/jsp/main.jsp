@@ -14,7 +14,7 @@
        value="${not empty param.locale ? param.locale : not empty cookie['lang'].value ? cookie['lang'].value : 'en'}"/>
 <fmt:setLocale value="${language}"/>
 
-<fmt:bundle basename="pagecontext" prefix="mainPage.">
+<fmt:bundle basename="text" prefix="mainPage.">
 
     <html lang="${language}">
 
@@ -30,6 +30,7 @@
     <body style="padding-top: 40px; padding-bottom: 120px; color: #820030" background="images/background.jpg">
 
     <c:import url="headOfPages.jsp"/>
+
     <div class="container" style="background: silver">
         <div class="container" style="background: silver">
             <div class="row" style="position:center">
@@ -78,14 +79,14 @@
 
                     <c:choose>
                         <c:when test="${authorizedUser.role.id!=2 and authorizedUser!=null}">
-                            <c:forEach var="element" items="${journeyList}">
-                                <form action="viewJourney.html" method="get">
+                            <c:forEach var="element" items="${product}">
+                                <form action="viewProduct.html" method="get">
                                     <div class="col-sm-4">
 
                                         <div class="card mb-1" style="width: 21rem;">
                                             <div class="card-body">
                                                 <div>
-                                                    <input type="hidden" id="journeyId" name="journeyId"
+                                                    <input type="hidden" id="idProduct" name="idProduct"
                                                            class="form-control"
                                                            value="${element.id}" readonly>
                                                 </div>
@@ -141,7 +142,7 @@
                     </c:choose>
                 </div>
 
-                <form action="listOfJourneys.html" method="get">
+                <form action="listOfProducts.html" method="get">
                     <div class="col-sm-4">
                     </div>
                     <div class="col-sm-12">

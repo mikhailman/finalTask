@@ -91,6 +91,8 @@ public class SecurityFilter implements Filter {
         adminAction.put(MenuCommand.class, "");
         adminAction.put(RegistrationCommand.class, "");
         adminAction.put(RegistrPageCommand.class, "");
+        adminAction.put(ShowProductCommand.class, "");
+
         // will be complete
 
         //userActions
@@ -100,6 +102,7 @@ public class SecurityFilter implements Filter {
         userAction.put(MenuCommand.class, "");
         userAction.put(RegistrationCommand.class, "");
         userAction.put(RegistrPageCommand.class, "");
+        userAction.put(ShowProductCommand.class, "");
         //also will be complete
     }
 }

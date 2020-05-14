@@ -18,15 +18,15 @@ import java.util.Optional;
 
 public class UserDAOImpl extends BaseDao implements UserDAO {
 
-    private static final String CREATE_USER = "INSERT INTO `users` (`role`, `login`, `password`, `email`, " +
-            "`phone`, `name`, `surname`, `status`, `date_registration`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CREATE_USER = "INSERT INTO `users` (users.`role`, `login`, `password`, `email`, " +
+            "`phone`, `name`, `surname`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String SELECT_ALL_USERS = "SELECT `users.id`, `users.login` FROM `users`";
+    private static final String SELECT_ALL_USERS = "SELECT `id`, `login` FROM `users`";
 
     private static final String SELECT_USER_BY_ID = "SELECT users.name FROM user WHERE id = ?";
 
-    private static final String GET_USER_BY_ID = "SELECT `users.login`, `users.name`, `users.surname`, " +
-            "`users.email`, `users.phone`, `users.date_registration` FROM `users` WHERE `users.id` = ?";
+    private static final String GET_USER_BY_ID = "SELECT `login`, `name`, `surname`, " +
+            "`email`, `phone`, `date_registration` FROM `users` WHERE `id` = ?";
 
     private static final String DELETE_USER_BY_ID = "DELETE FROM `users` WHERE `id` = ?";
 
@@ -34,15 +34,15 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
 
     private static final String UPDATE_USER = "UPDATE `users` SET `role` = ?, `login` = ?, `password` = ?," +
             " `email` = ?, `phone` = ?, `name` = ?, `surname` = ?, `status` = ?, `date_registration` = ?, " +
-            " WHERE `users.id` = ?";
+            " WHERE kefir.users.`id` = ?";
 
     private static final String SELECT_USER_BY_LOGIN_PWD = "SELECT id, login FROM users WHERE login = ? " +
             "and password = ?";
 
     private static final String GET_ALL_INFO_BY_ID = "SELECT `id`, `role`, `login`, `password`, `email`, `phone`, `name`, " +
-            "`surname`, `status`, `date_registration` FROM `users` WHERE `users.id` = ?";
+            "`surname`, `status`, `date_registration` FROM `users` WHERE `id` = ?";
 
-    private static final String GET_PASSWORD = "SELECT `id`, `role`,`password` FROM `users` WHERE `mail` = ?";
+    private static final String GET_PASSWORD = "SELECT `id`, `role`,`password` FROM `users` WHERE `email` = ?";
 
     private static final String INSERT_INTO_USERS = "INSERT INTO users(id, login, password, email, phone, name, " +
             "surname, status, date_registration, role) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -107,11 +107,9 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
-            statement.setLong(5, user.getPhone());
+            statement.setString(5, user.getPhone());
             statement.setString(6, user.getName());
             statement.setString(7, user.getSurname());
-            statement.setBoolean(8, user.isActiveStatus());
-            statement.setString(9, user.getDate_registration().toString());
             statement.executeUpdate();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -166,7 +164,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
                 user.setName(resultSet.getString("name"));
                 user.setSurname(resultSet.getString("surname"));
                 user.setEmail(resultSet.getString("email"));
-                user.setPhone(resultSet.getLong("phone"));
+                user.setPhone(resultSet.getString("phone"));
                 user.setDate_registration(LocalDate.parse(resultSet.getString("date_registration")));
             }
             return Optional.ofNullable(user);
@@ -201,7 +199,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
-            statement.setLong(5, user.getPhone());
+            statement.setString(5, user.getPhone());
             statement.setString(6, user.getName());
             statement.setString(7, user.getSurname());
             statement.setBoolean(8, user.isActiveStatus());
@@ -349,7 +347,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
                     user.setEmail(resultSet.getString("email"));
-                    user.setPhone(resultSet.getLong("phone"));
+                    user.setPhone(resultSet.getString("phone"));
                     user.setName(resultSet.getString("name"));
                     user.setSurname(resultSet.getString("surname"));
                     user.setActiveStatus(resultSet.getInt("status"));

@@ -188,17 +188,15 @@ public class DispatcherServlet extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = (Command) request.getAttribute("action");
+        logger.debug(command);
         try {
-            Command menu = new MenuCommand();
             CommandManager commandManager = CommandManagerFactory.getManager(getFactory());
-            commandManager.execute(menu, request, response);
             commandManager.execute(command, request, response);
             commandManager.close();
-//            request.getRequestDispatcher(ConstantsPath.INDEX_PAGE).forward(request, response);
 
         } catch (DAOException e) {
             logger.error("It is impossible to process request %s %s" + e.getMessage() + e);
-            request.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
+//            request.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
         }
     }
 

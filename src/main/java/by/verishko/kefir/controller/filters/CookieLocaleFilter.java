@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class LocaleFilter implements Filter {
+public class CookieLocaleFilter implements Filter {
 
     private static final int MAX_AGE = 24 * 60 * 60;
 

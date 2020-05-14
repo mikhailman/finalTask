@@ -18,6 +18,6 @@ public class ProfileCommand extends UserAction {
         User user = (User) request.getSession().getAttribute("authorizedUser");
         user = service.getUser(user.getIdUser());
         request.setAttribute("user", user);
-        request.getRequestDispatcher(ConstantsPath.PROFILE_PAGE).forward(request, response);
+        request.getRequestDispatcher(ConstantsPath.LOGIN_PAGE).forward(request, response);
     }
 }

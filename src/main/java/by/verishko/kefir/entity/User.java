@@ -11,7 +11,7 @@ public class User extends Entity {
     private String login;
     private String password;
     private String email;
-    private Long phone;
+    private String phone;
     private String name;
     private String surname;
     private Boolean activeStatus;
@@ -57,11 +57,11 @@ public class User extends Entity {
         this.email = email;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

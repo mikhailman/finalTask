@@ -7,8 +7,9 @@
        value="${not empty param.locale ? param.locale : not empty cookie['lang'].value ? cookie['lang'].value : 'en'}"/>
 <fmt:setLocale value="${language}"/>
 
-<fmt:bundle basename="pagecontent" prefix="userProfile.">
-    <html>
+<fmt:bundle basename="text" prefix="userProfile.">
+    <html lang="${language}">
+
     <head>
         <title><fmt:message key="title.authorisation"/></title>
         <meta charset="utf-8">
@@ -18,7 +19,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
-    <body style="padding-top: 40px; padding-bottom: 120px; color: #4B0082" background="images/background.jpg">
+    <body style="padding-top: 40px; padding-bottom: 120px; color: #820030" background="images/background.jpg">
 
     <c:import url="headOfPages.jsp"/>
 
@@ -34,7 +35,7 @@
                                     key="fields.login"/></label>
                             <input type="text" class="form-control" id="uname"
                                    placeholder="<fmt:message key="fields.login"/>"
-                                   name="login" value="${userLogin}" required autofocus pattern="^[\w-]{1,20}$">
+                                   name="login" value="${email}" required autofocus pattern="^[\w-]{1,20}$">
                             <div class="invalid-feedback"><fmt:message key="errors.fillOutTheField"/></div>
                             <label style="background-color: B82303; font-size: 25px">${errorLogin}</label>
                         </div>
@@ -87,5 +88,6 @@
 
     </script>
     </body>
-    </html>
+    </
+    >
 </fmt:bundle>

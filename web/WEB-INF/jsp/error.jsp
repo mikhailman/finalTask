@@ -13,7 +13,8 @@
 <c:set var="language"
        value="${not empty param.locale ? param.locale : not empty cookie['lang'].value ? cookie['lang'].value : 'en'}"/>
 <fmt:setLocale value="${language}"/>
-<fmt:bundle basename="pagecontent" prefix="errorPage.">
+
+<fmt:bundle basename="text" prefix="errorPage.">
 
     <html lang="${language}">
 

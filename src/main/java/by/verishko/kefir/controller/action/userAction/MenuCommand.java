@@ -23,11 +23,16 @@ public class MenuCommand extends UserAction {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
         CategoryService service = factory.createService(TypeDao.CATEGORY);
+
         logger.debug("Factory create!");
         logger.debug("CategoryService " + service);
+
         List<Category> category = service.getCategory();
+
         logger.debug(category);
+
         request.setAttribute("category", category);
+
         logger.debug("Category create! All good!");
     }
 }

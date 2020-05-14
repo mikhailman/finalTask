@@ -29,7 +29,6 @@ public class RegistrationCommand extends UserAction {
         try {
             User user = getUser(request);
             String repeatPassword = request.getParameter("password2");
-            String path = request.getServletContext().getResource("").getPath();
 
             user = userService.registerUser(user, repeatPassword);
             request.getSession().setAttribute("authorizedUser", user);
@@ -65,7 +64,7 @@ public class RegistrationCommand extends UserAction {
         user.setLogin(login);
         user.setPassword(password);
         user.setEmail(email);
-        user.setPhone(Long.valueOf(phone));
+        user.setPhone(phone);
         user.setName(name);
         user.setSurname(surname);
         return user;

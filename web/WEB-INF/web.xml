@@ -40,6 +40,14 @@
         <url-pattern>*.html</url-pattern>
     </filter-mapping>
     <filter>
+        <filter-name>CookieLocaleFilter</filter-name>
+        <filter-class>by.verishko.kefir.controller.filters.CookieLocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CookieLocaleFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter>
         <filter-name>SecurityFilter</filter-name>
         <filter-class>by.verishko.kefir.controller.filters.SecurityFilter</filter-class>
     </filter>
@@ -47,16 +55,7 @@
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>*.html</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>LocaleFilter</filter-name>
-        <filter-class>by.verishko.kefir.controller.filters.LocaleFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>LocaleFilter</filter-name>
-        <url-pattern>*.html</url-pattern>
-    </filter-mapping>
 
-    <!--todo подключить taglib!!!!-->
     <jsp-config>
         <taglib>
             <taglib-uri>kefirTag</taglib-uri>
@@ -64,20 +63,20 @@
         </taglib>
     </jsp-config>
 
-    <!--    <error-page>-->
-    <!--        <error-code>404</error-code>-->
-    <!--        <location>/WEB-INF/jsp/error.jsp</location>-->
-    <!--    </error-page>-->
-    <!--    <error-page>-->
-    <!--        <error-code>401</error-code>-->
-    <!--        <location>/WEB-INF/jsp/error.jsp</location>-->
-    <!--    </error-page>-->
-    <!--    <error-page>-->
-    <!--        <error-code>500</error-code>-->
-    <!--        <location>/WEB-INF/jsp/error.jsp</location>-->
-    <!--    </error-page>-->
-    <!--    <error-page>-->
-    <!--        <exception-type>java.lang.RuntimeException</exception-type>-->
-    <!--        <location>/WEB-INF/jsp/error.jsp</location>-->
-    <!--    </error-page>-->
+    <!--        <error-page>-->
+    <!--            <error-code>404</error-code>-->
+    <!--            <location>/WEB-INF/jsp/error.jsp</location>-->
+    <!--        </error-page>-->
+    <!--        <error-page>-->
+    <!--            <error-code>401</error-code>-->
+    <!--            <location>/WEB-INF/jsp/error.jsp</location>-->
+    <!--        </error-page>-->
+    <!--        <error-page>-->
+    <!--            <error-code>500</error-code>-->
+    <!--            <location>/WEB-INF/jsp/error.jsp</location>-->
+    <!--        </error-page>-->
+    <!--        <error-page>-->
+    <!--            <exception-type>java.lang.RuntimeException</exception-type>-->
+    <!--            <location>/WEB-INF/jsp/error.jsp</location>-->
+    <!--        </error-page>-->
 </web-app>
