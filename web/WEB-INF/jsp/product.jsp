@@ -35,7 +35,7 @@
     <body style="padding-top: 40px; padding-bottom: 120px; color: #820030" background="images/background.jpg">
 
     <c:import url="headOfPages.jsp"/>
-        <%--    <%@ include file="headOfPages.jsp" %>--%>
+        <%--            <%@ include file="headOfPages.jsp" %>--%>
     <div class="text-center" style="margin-top:30px;margin-right: 20px">
         <h1 class="display-3">${product.name}</h1>
         <span style="color: #b30300" id="errorValue"></span>

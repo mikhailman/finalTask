@@ -18,8 +18,8 @@ import java.util.Optional;
 
 public class UserDAOImpl extends BaseDao implements UserDAO {
 
-    private static final String CREATE_USER = "INSERT INTO `users` (users.`role`, `login`, `password`, `email`, " +
-            "`phone`, `name`, `surname`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String CREATE_USER = "INSERT INTO `users` (`login`, `password`, `email`, " +
+            "`phone`, `name`, `surname`) VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final String SELECT_ALL_USERS = "SELECT `id`, `login` FROM `users`";
 
@@ -103,13 +103,13 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, user.getRole().getIdRole());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPhone());
-            statement.setString(6, user.getName());
-            statement.setString(7, user.getSurname());
+//            statement.setInt(1, user.getRole().getIdRole());
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPhone());
+            statement.setString(5, user.getName());
+            statement.setString(6, user.getSurname());
             statement.executeUpdate();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {

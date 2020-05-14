@@ -25,8 +25,10 @@ public class LoginCommand extends UserAction {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+
         String login = request.getParameter("email");
         String password = request.getParameter("password");
+        logger.debug("login and password received");
         Map<String, String> message = new HashMap<>();
         try {
             if (login != null && password != null) {
@@ -35,6 +37,13 @@ public class LoginCommand extends UserAction {
                 request.getSession().setAttribute("authorizedUser", user);
                 logger.info("user \"%s\" is logged in from %s (%s:%s)", login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort());
                 message.put("url", request.getContextPath() + ConstantsPath.HOME);
+                if (user != null) {
+                    if (user.getRole().equals(1)) {
+                        request.getRequestDispatcher(ConstantsPath.LOGIN_PAGE_ADMIN).forward(request, response);
+                    } else if (user.getRole().equals(2)) {
+                        request.getRequestDispatcher(ConstantsPath.LOGIN_PAGE_USER).forward(request, response);
+                    }
+                }
                 String json = new Gson().toJson(message);
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
@@ -42,6 +51,7 @@ public class LoginCommand extends UserAction {
             }
         } catch (ServiceException e) {
             logger.info("user \"%s\" unsuccessfully tried to log in from %s (%s:%s)", login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort());
+            request.getRequestDispatcher(ConstantsPath.LOGIN_PAGE).forward(request, response);
             message.put(e.getMessage(), e.getMessage());
             String json = new Gson().toJson(message);
             response.setContentType("application/json");

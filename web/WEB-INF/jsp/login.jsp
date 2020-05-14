@@ -88,6 +88,21 @@
 
     </script>
     </body>
-    </
-    >
+
+
+    <div class="container p-3">
+        <form action="controller" method="post">
+            <input type="hidden" name="command" value="login"/>
+            <div class="form-group">
+                <input type="text" class="form-control" name="login" value="" placeholder="Enter Login" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" value="" placeholder="Enter Password"
+                       required></br>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-dark" value="Enter">
+            </div>
+        </form>
+    </div>
 </fmt:bundle>

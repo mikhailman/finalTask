@@ -23,7 +23,7 @@ USE `kefir`;
 CREATE TABLE IF NOT EXISTS `kefir`.`users`
 (
     `id`                INT(11)      NOT NULL AUTO_INCREMENT,
-    `role`              TINYINT(4)   NOT NULL,
+    `role`              TINYINT(4)   NOT NULL DEFAULT 2,
     /*
      * 1 - администратор (Role.ADMINISTRATOR)
      * 2 - пользователь (Role.USER)

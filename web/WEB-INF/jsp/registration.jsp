@@ -61,16 +61,16 @@
             <h2><fmt:message key="title.registration"/></h2>
             <label style="background-color: #B82303; font-size: 25px">${unknownError}</label>
 
-            <div class="form-group row">
-                <label for="role" class="col-sm-3 control-label"><fmt:message key="fields.role"/>*</label>
-                <div class="col-sm-9 some-form__line">
-                    <input type="text" id="role" name="role" placeholder="<fmt:message key="fields.role"/>"
-                           class="form-control" value="${userRole}"
-                           required autofocus pattern="^[\w\dа-яА-Я-+%$@!]{1,50}$">
-                    <div class="invalid-feedback"><fmt:message key="errors.fillOutTheField"/></div>
-                </div>
-                <label style="background-color: B82303; font-size: 25px">${errorRole}</label>
-            </div>
+                <%--            <div class="form-group row">--%>
+                <%--                <label for="role" class="col-sm-3 control-label"><fmt:message key="fields.role"/>*</label>--%>
+                <%--                <div class="col-sm-9 some-form__line">--%>
+                <%--                    <input type="text" id="role" name="role" placeholder="<fmt:message key="fields.role"/>"--%>
+                <%--                           class="form-control" value="${userRole}"--%>
+                <%--                           required autofocus pattern="^[\w\dа-яА-Я-+%$@!]{1,50}$">--%>
+                <%--                    <div class="invalid-feedback"><fmt:message key="errors.fillOutTheField"/></div>--%>
+                <%--                </div>--%>
+                <%--                <label style="background-color: B82303; font-size: 25px">${errorRole}</label>--%>
+                <%--            </div>--%>
 
             <div class="form-group row">
                 <label for="login" class="col-sm-3 control-label"><fmt:message key="fields.login"/>*</label>

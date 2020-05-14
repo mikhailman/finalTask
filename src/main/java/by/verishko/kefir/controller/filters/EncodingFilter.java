@@ -47,8 +47,8 @@ public class EncodingFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setCharacterEncoding("UTF-8");
         httpResponse.setHeader("Cache-Control", "no-cache");
-        httpResponse.setHeader("Pragma", "no-cache");
-        httpResponse.setDateHeader("Expires", 0);
+//        httpResponse.setHeader("Pragma", "no-cache");
+//        httpResponse.setDateHeader("Expires", 0);
         chain.doFilter(request, response);
     }
 }

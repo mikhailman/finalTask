@@ -3,7 +3,6 @@ package by.verishko.kefir.controller;
 import by.verishko.kefir.controller.action.Command;
 import by.verishko.kefir.controller.action.CommandManager;
 import by.verishko.kefir.controller.action.CommandManagerFactory;
-import by.verishko.kefir.controller.action.userAction.MenuCommand;
 import by.verishko.kefir.controller.constantspath.ConstantsPath;
 import by.verishko.kefir.dao.connect.ConnectionPool;
 import by.verishko.kefir.dao.exception.DAOException;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class DispatcherServlet extends HttpServlet {
     /**
@@ -114,21 +112,6 @@ public class DispatcherServlet extends HttpServlet {
         process(request, response);
     }
 
-//    public void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws IOException, ServletException
-//    {
-//        response.setContentType("text/html");
-//        PrintWriter out = response.getWriter();
-//        out.println("<html>");
-//        out.println("<head>");
-//        out.println("<title>КАК ДЕЛА?!</title>");
-//        out.println("</head>");
-//        out.println("<body>");
-//        out.println("<h1>КАК ДЕЛА!</h1>");
-//        out.println("</body>");
-//        out.println("</html>");
-//    }
-
     /**
      * Called by the server (via the <code>service</code> method)
      * to allow a servlet to handle a POST request.
@@ -196,7 +179,7 @@ public class DispatcherServlet extends HttpServlet {
 
         } catch (DAOException e) {
             logger.error("It is impossible to process request %s %s" + e.getMessage() + e);
-//            request.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
         }
     }
 
