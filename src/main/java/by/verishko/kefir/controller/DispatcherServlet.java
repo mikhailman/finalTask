@@ -3,6 +3,7 @@ package by.verishko.kefir.controller;
 import by.verishko.kefir.controller.action.Command;
 import by.verishko.kefir.controller.action.CommandManager;
 import by.verishko.kefir.controller.action.CommandManagerFactory;
+import by.verishko.kefir.controller.action.userAction.MenuCommand;
 import by.verishko.kefir.controller.constantspath.ConstantsPath;
 import by.verishko.kefir.dao.connect.ConnectionPool;
 import by.verishko.kefir.dao.exception.DAOException;
@@ -171,11 +172,13 @@ public class DispatcherServlet extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = (Command) request.getAttribute("action");
-        logger.debug(command);
+        logger.debug("Command from DispatcherServlet " + command);
         try {
+//            Command menu = new MenuCommand();
             CommandManager commandManager = CommandManagerFactory.getManager(getFactory());
+//            commandManager.execute(menu, request, response);
             commandManager.execute(command, request, response);
-            commandManager.close();
+//            commandManager.close();
 
         } catch (DAOException e) {
             logger.error("It is impossible to process request %s %s" + e.getMessage() + e);

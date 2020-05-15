@@ -21,7 +21,7 @@ public class MenuCommand extends UserAction {
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
         CategoryService service = factory.createService(TypeDao.CATEGORY);
 
         logger.debug("Factory create!");

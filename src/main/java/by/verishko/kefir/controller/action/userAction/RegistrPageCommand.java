@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class RegistrPageCommand extends UserAction {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
         request.getRequestDispatcher(ConstantsPath.REGISTRATE_PAGE).forward(request, response);
     }
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class ShowProductCommand extends UserAction {
     @Override
-    public void execute(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
         ProductService service = factory.createService(TypeDao.PRODUCT);
         CommentService commentService = factory.createService(TypeDao.COMMENT);
         User user = (User) request.getSession().getAttribute("authorizedUser");

@@ -94,6 +94,9 @@ public class CommandFromUriFilter implements Filter {
             case "/login":
                 return new LoginCommand();
 
+            case "/loginPage":
+                return new LoginPageCommand();
+
             case "/logout":
                 return new LogoutCommand();
 

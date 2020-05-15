@@ -87,6 +87,7 @@ public class SecurityFilter implements Filter {
         //adminActions
         adminAction.put(HomeCommand.class, "");
         adminAction.put(LoginCommand.class, "");
+        adminAction.put(LoginPageCommand.class, "");
         adminAction.put(LogoutCommand.class, "");
         adminAction.put(MenuCommand.class, "");
         adminAction.put(RegistrationCommand.class, "");
@@ -98,6 +99,7 @@ public class SecurityFilter implements Filter {
         //userActions
         userAction.put(HomeCommand.class, "");
         userAction.put(LoginCommand.class, "");
+        userAction.put(LoginPageCommand.class, "");
         userAction.put(LogoutCommand.class, "");
         userAction.put(MenuCommand.class, "");
         userAction.put(RegistrationCommand.class, "");

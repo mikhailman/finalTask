@@ -74,74 +74,6 @@
             </div>
 
             <div class="container" style="background: silver">
-
-                <div class="row">
-
-                    <c:choose>
-                        <c:when test="${authorizedUser.role.id!=2 and authorizedUser!=null}">
-                            <c:forEach var="element" items="${product}">
-                                <form action="viewProduct.html" method="get">
-                                    <div class="col-sm-4">
-
-                                        <div class="card mb-1" style="width: 21rem;">
-                                            <div class="card-body">
-                                                <div>
-                                                    <input type="hidden" id="idProduct" name="idProduct"
-                                                           class="form-control"
-                                                           value="${element.id}" readonly>
-                                                </div>
-                                                <h5 class="card-title"><c:out value="${element.startAddress.city}"/> -
-                                                    <c:out
-                                                            value="${element.destinationAddress.city}"/></h5>
-                                                <h6 class="card-subtitle mb-2 text-muted"><fmt:message
-                                                        key="fields.departure"/></h6>
-                                                <h6 class="card-subtitle mb-2 text-muted"><fmt:message
-                                                        key="fields.date"/><c:out
-                                                        value="${element.departureDate}"/>, <fmt:message
-                                                        key="fields.time"/><c:out
-                                                        value="${element.departureTime}"/></h6>
-                                                <p class="card-text"><fmt:message key="fields.price"/><c:out
-                                                        value="${element.cost}"/>
-                                                    <c:out
-                                                            value="${element.currency}"/></p>
-                                                <button type="submit" class="btn btn-primary btn-sm"><fmt:message
-                                                        key="button.moreInfo"/></button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </c:forEach>
-                        </c:when>
-
-                        <c:otherwise>
-                            <c:forEach var="element" items="${journeyList}">
-
-                                <div class="col-sm-4">
-
-                                    <div class="card mb-1" style="width: 21rem;">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><c:out value="${element.startAddress.city}"/> -
-                                                <c:out
-                                                        value="${element.destinationAddress.city}"/></h5>
-                                            <h6 class="card-subtitle mb-2 text-muted"><fmt:message
-                                                    key="fields.departure"/></h6>
-                                            <h6 class="card-subtitle mb-2 text-muted"><fmt:message
-                                                    key="fields.date"/><c:out
-                                                    value="${element.departureDate}"/>, <fmt:message
-                                                    key="fields.time"/><c:out
-                                                    value="${element.departureTime}"/></h6>
-                                            <p class="card-text"><fmt:message key="fields.price"/><c:out
-                                                    value="${element.cost}"/> <c:out
-                                                    value="${element.currency}"/></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-
                 <form action="listOfProducts.html" method="get">
                     <div class="col-sm-4">
                     </div>
@@ -156,6 +88,7 @@
             </div>
         </div>
     </div>
+        <%--    <%@ include file="/WEB-INF/jsp/menu.jsp" %>--%>
 
 
     <c:import url="endOfPages.jsp"/>

@@ -39,13 +39,16 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
         }
     }
 
-    public User findUserByEmail(final String email, String password) throws DAOException, ServiceException {
+    public User findUserByEmail(final String email, final String password) throws DAOException, ServiceException {
         UserDAO dao = transaction.createDao(TypeDao.USER);
+        logger.debug("Email and password From findUserByEmail (UserServiceImpl) " + email + " " + password);
         try {
             Optional<User> user = dao.getPassword(email);
+            logger.debug("User from UserService " + user);
             if (user.isPresent()) {
-                user.get().setPassword("");
+//                user.get().setPassword("");
                 transaction.commit();
+                logger.debug("User from UserServiceImpl (findUserByEmail) " + user);
                 return user.get();
             } else {
                 throw new ServiceException("unknownUser");

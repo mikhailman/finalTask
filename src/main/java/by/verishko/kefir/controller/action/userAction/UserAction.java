@@ -10,6 +10,6 @@ import java.io.IOException;
 
 public abstract class UserAction extends Command {
 
-    public abstract void execute(HttpServletRequest request,
-                                 HttpServletResponse response) throws DAOException, ServletException, IOException;
+    public abstract void exec(HttpServletRequest request,
+                              HttpServletResponse response) throws DAOException, ServletException, IOException;
 }

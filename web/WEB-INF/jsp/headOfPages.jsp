@@ -110,7 +110,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="btn-group" style="position:absolute; top:15px; right:200px;">
-                        <form action="login.html" method="post">
+                        <form action="loginPage.html" method="post">
                             <button type="submit" class="btn btn-outline-warning btn-sm">
                                 <fmt:message key="mainPage.button.login"/>
                             </button>

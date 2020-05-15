@@ -28,7 +28,7 @@ public class CommandManagerImpl implements CommandManager {
                         final HttpServletResponse response) throws DAOException, ServletException, IOException {
         command.setFactory(factory);
         logger.debug("ServiceFactory " + factory.toString());
-        command.execute(request, response);
+        command.exec(request, response);
     }
 
     @Override

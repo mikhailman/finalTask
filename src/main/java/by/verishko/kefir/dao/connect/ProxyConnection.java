@@ -11,6 +11,11 @@ public class ProxyConnection implements Connection {
      */
     private Connection connection;
 
+    /**
+     * Constructor ProxyConnection.
+     *
+     * @param connection .
+     */
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }
@@ -224,9 +229,9 @@ public class ProxyConnection implements Connection {
      */
     @Override
     public void close() throws SQLException {
-        if (!this.getAutoCommit()) {
-            this.setAutoCommit(true);
-        }
+//        if (!this.getAutoCommit()) {
+//            this.setAutoCommit(true);
+//        }
         ConnectionPool.getInstance().releaseConnection(this);
     }
 
@@ -1543,5 +1548,14 @@ public class ProxyConnection implements Connection {
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         return connection.isWrapperFor(iface);
+    }
+
+    /**
+     * Getter for connection.
+     *
+     * @return .
+     */
+    public Connection getConnection() {
+        return connection;
     }
 }

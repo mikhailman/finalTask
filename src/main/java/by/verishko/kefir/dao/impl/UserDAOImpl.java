@@ -42,7 +42,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     private static final String GET_ALL_INFO_BY_ID = "SELECT `id`, `role`, `login`, `password`, `email`, `phone`, `name`, " +
             "`surname`, `status`, `date_registration` FROM `users` WHERE `id` = ?";
 
-    private static final String GET_PASSWORD = "SELECT `id`, `role`,`password` FROM `users` WHERE `email` = ?";
+    private static final String GET_PASSWORD = "SELECT `id`,`password` FROM kefir.`users` WHERE `email` = ?";
 
     private static final String INSERT_INTO_USERS = "INSERT INTO users(id, login, password, email, phone, name, " +
             "surname, status, date_registration, role) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -300,25 +300,27 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     }
 
     @Override
-    public Optional<User> getPassword(String email) throws DAOException {
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = connection.prepareStatement(GET_PASSWORD);
+    public Optional<User> getPassword(final String email) throws DAOException {
+        try (PreparedStatement statement = connection.prepareStatement(GET_PASSWORD)) {
+
             statement.setString(1, email);
-            try {
-                resultSet = statement.executeQuery();
+            logger.debug("Statement from UserDAOImpl " + statement);
+            try (ResultSet resultSet = statement.executeQuery()) {
+
                 User user = null;
                 if (resultSet.next()) {
+                    user = new User();
+                    logger.debug("Resultset getPassword " + resultSet);
                     user.setIdUser(resultSet.getInt("id"));
-                    user.setRole(Role.getByIdRole(resultSet.getInt("role")));
                     user.setPassword(resultSet.getString("password"));
                 }
+                logger.debug("User from UserDAOImpl " + user);
                 return Optional.ofNullable(user);
             } catch (SQLException e) {
                 throw new DAOException(e);
             }
-        } catch (SQLException e) {
+        } catch (
+                SQLException e) {
             throw new DAOException(e);
         }
     }

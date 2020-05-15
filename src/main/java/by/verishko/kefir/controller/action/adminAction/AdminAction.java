@@ -10,6 +10,6 @@ import java.io.IOException;
 
 public abstract class AdminAction extends Command {
 
-    public abstract void execute(final HttpServletRequest request,
-                                 final HttpServletResponse response) throws DAOException, ServletException, IOException;
+    public abstract void exec(final HttpServletRequest request,
+                              final HttpServletResponse response) throws DAOException, ServletException, IOException;
 }

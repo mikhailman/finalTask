@@ -13,11 +13,11 @@ import java.io.IOException;
 
 public class ProfileCommand extends UserAction {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
         UserService service = factory.createService(TypeDao.USER);
         User user = (User) request.getSession().getAttribute("authorizedUser");
         user = service.getUser(user.getIdUser());
         request.setAttribute("user", user);
-        request.getRequestDispatcher(ConstantsPath.LOGIN_PAGE).forward(request, response);
+        request.getRequestDispatcher(ConstantsPath.MY_PROFILE).forward(request, response);
     }
 }

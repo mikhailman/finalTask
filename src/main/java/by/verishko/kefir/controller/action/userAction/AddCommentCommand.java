@@ -17,7 +17,7 @@ public class AddCommentCommand extends UserAction {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public void execute(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
         CommentService service = factory.createService(TypeDao.COMMENT);
         User user = (User) request.getSession().getAttribute("authorizedUser");
         String idProduct = request.getParameter("idProduct");

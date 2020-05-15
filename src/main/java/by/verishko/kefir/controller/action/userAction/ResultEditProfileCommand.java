@@ -21,7 +21,7 @@ public class ResultEditProfileCommand extends UserAction {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public void execute(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
         UserService service = factory.createService(TypeDao.USER);
         Map<String, String> messages = new HashMap<>();
         String oldPassword = request.getParameter("oldPassword");

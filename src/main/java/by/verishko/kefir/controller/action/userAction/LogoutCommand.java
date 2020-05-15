@@ -18,7 +18,7 @@ public class LogoutCommand extends UserAction {
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
         User user = (User) request.getSession().getAttribute("authorizedUser");
         logger.info("user \"%s\" is logged out", user.getIdUser());
         request.getSession(false).invalidate();

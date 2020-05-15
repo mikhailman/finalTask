@@ -1,5 +1,7 @@
 package by.verishko.kefir.dao.connect;
 
+import by.verishko.kefir.dao.exception.ConnectionError;
+import by.verishko.kefir.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,18 +11,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    public static final String DATABASE_PROPERTIES = "dbresourse.database";
-    public static final String URL = "db.url";
-    public static final String LOGIN = "db.login";
-    public static final String PASSWORD = "db.password";
-    public static final String CONNECTION_POOLSIZE = "db.poolsize";
-    public static final String DB_DRIVER = "db.driver";
+    private static final String DATABASE_PROPERTIES = "dbresourse.database";
+    private static final String URL = "db.url";
+    private static final String LOGIN = "db.login";
+    private static final String PASSWORD = "db.password";
+    private static final String CONNECTION_POOLSIZE = "db.poolsize";
+    private static final String DB_DRIVER = "db.driver";
+    private static final String DB_MAX_SIZE = "db.max_size";
+    private static final String DB_CHECK_CONNECTION_TIMEOUT = "db.check_connection_timeout";
 
     /**
      * static variable single_instance of type ConnectionPool.
@@ -46,11 +50,11 @@ public class ConnectionPool {
     /**
      * Pool of free compounds with database.
      */
-    private BlockingQueue<ProxyConnection> freeConnections;
+    private BlockingDeque<ProxyConnection> freeConnections;
     /**
      * Pool of using compounds with database.
      */
-    private BlockingQueue<ProxyConnection> usedConnections;
+    private BlockingDeque<ProxyConnection> usedConnections;
     /**
      * Value of database location.
      */
@@ -64,13 +68,19 @@ public class ConnectionPool {
      */
     private String password;
     /**
-     * default size of pool of connections to database.
+     * driver for using database.
      */
     private String driver;
     /**
-     * driver for using database.
+     * default size of pool of connections to database.
      */
     private int poolSize;
+    /**
+     * maximal size of pool of connections to database.
+     */
+    private int maxSize;
+
+    private int checkConnectionTimeout;
 
     /**
      * Constructor.
@@ -81,10 +91,10 @@ public class ConnectionPool {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
             logger.error(e);
+            throw new ConnectionError(e);
         }
         init();
-        checkPoolSize();
-        usedConnections = new LinkedBlockingQueue<>();
+//        checkPoolSize();
     }
 
     /**
@@ -97,26 +107,28 @@ public class ConnectionPool {
         password = resourceBundle.getString(PASSWORD);
         poolSize = Integer.parseInt(resourceBundle.getString(CONNECTION_POOLSIZE).trim());
         driver = resourceBundle.getString(DB_DRIVER);
+        maxSize = Integer.parseInt(resourceBundle.getString(DB_MAX_SIZE));
+        checkConnectionTimeout = Integer.parseInt(resourceBundle.getString(DB_CHECK_CONNECTION_TIMEOUT));
     }
 
     /**
      * Initializing pool of connections to dataBase.
      */
     private void init() {
-        freeConnections = new LinkedBlockingQueue<>(poolSize);
-        ProxyConnection connection = null;
+        freeConnections = new LinkedBlockingDeque<>(poolSize);
+        usedConnections = new LinkedBlockingDeque<>();
         for (int counter = 0; counter < poolSize; counter++) {
             try {
-                connection = new ProxyConnection(DriverManager.getConnection(url, user, password));
-                freeConnections.add(connection);
+                freeConnections.add(createConnection());
             } catch (SQLException e) {
-                logger.error(e);
+                logger.error("Error created  pool. ", e);
+                Thread.currentThread().interrupt();
             }
         }
     }
 
     private void checkPoolSize() {
-        int poolRealSize = ((LinkedBlockingQueue) freeConnections).size();
+        int poolRealSize = freeConnections.size();
         if (poolRealSize == poolSize) {
             logger.debug("pool is correct");
         } else if (poolRealSize > 0) {
@@ -125,6 +137,13 @@ public class ConnectionPool {
             logger.error("no connection to DB");
             throw new ExceptionInInitializerError("no connection to DB");
         }
+    }
+
+    /**
+     * Getting pool of connections.
+     */
+    private ProxyConnection createConnection() throws SQLException {
+        return new ProxyConnection(DriverManager.getConnection(url, user, password));
     }
 
     /**
@@ -152,16 +171,34 @@ public class ConnectionPool {
      *
      * @return connection to database.
      */
-    public Connection takeConnection() {
+    public Connection takeConnection() throws DAOException {
         ProxyConnection connection = null;
         while (connection == null) {
             try {
-                connection = freeConnections.take();
-                usedConnections.put(connection);
-            } catch (InterruptedException e) {
-                logger.error("Утечка соединения" + e);
+                if (!freeConnections.isEmpty()) {
+                    connection = freeConnections.take();
+                    if (!connection.isValid(checkConnectionTimeout)) {
+                        connection.getConnection().close();
+                        connection = null;
+                    }
+                } else if (usedConnections.size() < maxSize) {
+                    connection = createConnection();
+                } else {
+                    logger.error("The limit of number of database connections is exceeded");
+                    throw new DAOException();
+                }
+            } catch (InterruptedException | SQLException e) {
+                logger.error("It is impossible to connect to a database", e);
                 Thread.currentThread().interrupt();
+                throw new DAOException(e);
             }
+        }
+        try {
+            usedConnections.put(connection);
+        } catch (InterruptedException e) {
+            logger.error("Утечка соединения" + e);
+            logger.debug(String.format("Connection was received from pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
+            Thread.currentThread().interrupt();
         }
         return connection;
     }
@@ -171,11 +208,24 @@ public class ConnectionPool {
      *
      * @param connection using connection of pool.
      */
-    public void releaseConnection(Connection connection) {
-        if (connection instanceof ProxyConnection) {
-            ProxyConnection proxyConnection = (ProxyConnection) connection;
-            usedConnections.remove(proxyConnection);
-            freeConnections.offer(proxyConnection);
+    void releaseConnection(ProxyConnection connection) {
+        try {
+            if (connection.isValid(checkConnectionTimeout)) {
+                connection.clearWarnings();
+                connection.setAutoCommit(true);
+                usedConnections.remove(connection);
+                freeConnections.offer(connection);
+
+                String message = String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size());
+                logger.debug(message);
+            }
+        } catch (SQLException e1) {
+            logger.warn("It is impossible to return database connection into pool", e1);
+            try {
+                connection.getConnection().close();
+            } catch (SQLException e) {
+                logger.warn("error closed connection.");
+            }
         }
     }
 
@@ -184,26 +234,29 @@ public class ConnectionPool {
      * and then deregister drivers.
      */
     public void closePool() {
-        for (int i = 0; i < poolSize; i++) {
+        ProxyConnection proxyConnection = null;
+        for (int i = 0; i < freeConnections.size(); i++) {
             try {
-                ProxyConnection proxyConnection = freeConnections.take();
+                proxyConnection = freeConnections.take();
                 proxyConnection.realClose();
             } catch (SQLException | InterruptedException e) {
+                logger.error("Cannot close connection. ", e);
                 Thread.currentThread().interrupt();
-                logger.error("Cannot close connection.\n", e);
             }
         }
         logger.info("Connection pool successfully released");
+        freeConnections.clear();
         deregisterDrivers();
     }
 
     private void deregisterDrivers() {
         Enumeration<Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
+            Driver driver = drivers.nextElement();
             try {
-                DriverManager.deregisterDriver(drivers.nextElement());
+                DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error(e);
+                logger.error("Cant deregister SQL driver ", e);
             }
         }
     }

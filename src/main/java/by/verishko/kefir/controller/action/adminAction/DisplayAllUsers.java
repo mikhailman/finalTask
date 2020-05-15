@@ -17,8 +17,8 @@ public class DisplayAllUsers extends AdminAction {
     private static final String LIST_OF_USERS_ATTRIBUTE = "usersList";
 
     @Override
-    public void execute(final HttpServletRequest request,
-                        final HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(final HttpServletRequest request,
+                     final HttpServletResponse response) throws DAOException, ServletException, IOException {
         UserService userService = factory.createService(TypeDao.USER);
         List<User> list = userService.findAll();
 
