@@ -55,4 +55,4 @@ Final Task. Web Project
 
 kefir data base diagram:
 
-![alt text](kefir_data_base_diagram.jpg "kefir_data_base_diagram")
+![alt text](kefir_data_base_diagram.png "kefir_data_base_diagram")
