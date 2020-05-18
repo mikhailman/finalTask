@@ -5,6 +5,7 @@ import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.Category;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.CategoryService;
+import by.verishko.kefir.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,18 +21,22 @@ public class CategoryServiceImpl extends ServiceImpl implements CategoryService 
      * Get category.
      *
      * @return list category.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     @Override
-    public List<Category> getCategory() throws DAOException {
+    public List<Category> getCategory() throws ServiceException {
         try {
             CategoryDAO dao = transaction.createDao(TypeDao.CATEGORY);
             transaction.commit();
             logger.debug("dao.read() - " + dao.read());
             return dao.read();
         } catch (DAOException e) {
-            transaction.rollback();
-            throw new DAOException("Error CategoryDAO getCatalog", e);
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
+            throw new ServiceException("Error CategoryDAO getCatalog", e);
         }
     }
 }

@@ -23,7 +23,7 @@ public class RegistrationCommand extends UserAction {
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
     @Override
-    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, IOException, ServletException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         UserService userService = factory.createService(TypeDao.USER);
         Map<String, String> messages = new HashMap<>();
         try {

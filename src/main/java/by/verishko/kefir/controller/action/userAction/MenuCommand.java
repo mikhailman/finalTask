@@ -4,6 +4,7 @@ import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.Category;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.CategoryService;
+import by.verishko.kefir.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +22,7 @@ public class MenuCommand extends UserAction {
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
     @Override
-    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, ServletException, IOException {
         CategoryService service = factory.createService(TypeDao.CATEGORY);
 
         logger.debug("Factory create!");

@@ -8,6 +8,7 @@ import by.verishko.kefir.entity.User;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.CommentService;
 import by.verishko.kefir.service.ProductService;
+import by.verishko.kefir.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 public class ShowProductCommand extends UserAction {
     @Override
-    public void exec(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, ServletException, IOException {
         ProductService service = factory.createService(TypeDao.PRODUCT);
         CommentService commentService = factory.createService(TypeDao.COMMENT);
         User user = (User) request.getSession().getAttribute("authorizedUser");

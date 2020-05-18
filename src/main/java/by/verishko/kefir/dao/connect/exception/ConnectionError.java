@@ -1,4 +1,4 @@
-package by.verishko.kefir.dao.exception;
+package by.verishko.kefir.dao.connect.exception;
 
 public class ConnectionError extends RuntimeException {
 

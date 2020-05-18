@@ -6,6 +6,7 @@ import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.Product;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.ProductService;
+import by.verishko.kefir.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,12 +24,20 @@ public class ProductServiceImpl extends ServiceImpl implements ProductService {
      *
      * @param product object disk.
      * @param idUser  user id.
-     * @throws DAOException no validate parameter disk.
+     * @throws ServiceException no validate parameter disk.
      */
     @Override
-    public void createProduct(Product product, Integer idUser) throws DAOException {
-        ProductDAO dao = transaction.createDao(TypeDao.PRODUCT);
-        CategoryDAO category = transaction.createDao(TypeDao.CATEGORY);
+    public void createProduct(Product product, Integer idUser) throws ServiceException {
+        try {
+            ProductDAO dao = transaction.createDao(TypeDao.PRODUCT);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            CategoryDAO category = transaction.createDao(TypeDao.CATEGORY);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         //todo add validator!!
         try {
             product.setUser_id(idUser);
@@ -42,10 +51,10 @@ public class ProductServiceImpl extends ServiceImpl implements ProductService {
      *
      * @param idUser user id.
      * @return product that found
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     @Override
-    public Product getProduct(Integer idUser) throws DAOException {
+    public Product getProduct(Integer idUser) throws ServiceException {
         return null;
     }
 
@@ -53,10 +62,10 @@ public class ProductServiceImpl extends ServiceImpl implements ProductService {
      * Update product
      *
      * @param product new parameter's disk.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     @Override
-    public void updateProduct(Product product) throws DAOException {
+    public void updateProduct(Product product) throws ServiceException {
 
     }
 
@@ -64,20 +73,29 @@ public class ProductServiceImpl extends ServiceImpl implements ProductService {
      * Delete product.
      *
      * @param idProduct id product.
-     * @throws DAOException sql exception or number format id disk.
+     * @throws ServiceException sql exception or number format id disk.
      */
     @Override
-    public void deleteProduct(String idProduct) throws DAOException {
-        ProductDAO dao = transaction.createDao(TypeDao.PRODUCT);
+    public void deleteProduct(String idProduct) throws ServiceException {
+        ProductDAO dao = null;
+        try {
+            dao = transaction.createDao(TypeDao.PRODUCT);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         try {
             Integer productId = Integer.parseInt(idProduct);
             dao.delete(productId);
             transaction.commit();
             logger.debug("Product successfully deleted");
         } catch (DAOException e) {
-            transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
             logger.error(e);
-            throw new DAOException(e);
+            throw new ServiceException(e);
 
         }
     }

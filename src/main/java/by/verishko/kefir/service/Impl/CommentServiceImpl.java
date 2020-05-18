@@ -7,6 +7,7 @@ import by.verishko.kefir.entity.Comment;
 import by.verishko.kefir.entity.User;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.CommentService;
+import by.verishko.kefir.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,10 +30,10 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
      *
      * @param idProduct integer id product.
      * @return map with user info and his comment.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     @Override
-    public Map<Comment, User> getComment(Integer idProduct) throws DAOException {
+    public Map<Comment, User> getComment(Integer idProduct) throws ServiceException {
         try {
             CommentDAO dao = transaction.createDao(TypeDao.COMMENT);
             UserDAO userDAO = transaction.createDao(TypeDao.USER);
@@ -47,9 +48,13 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
             logger.info("Say mom Comment successfully added");
             return mapCommentAndUser;
         } catch (DAOException e) {
-            transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
             logger.error(e);
-            throw new DAOException(e);
+            throw new ServiceException(e);
         }
     }
 
@@ -59,11 +64,16 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
      * @param idProduct   id product.
      * @param commentBody comment text.
      * @param idUser      id user.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     @Override
-    public void addComment(String idProduct, String commentBody, Integer idUser) throws DAOException {
-        CommentDAO dao = transaction.createDao(TypeDao.COMMENT);
+    public void addComment(String idProduct, String commentBody, Integer idUser) throws ServiceException {
+        CommentDAO dao = null;
+        try {
+            dao = transaction.createDao(TypeDao.COMMENT);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         Comment comment = new Comment();
         try {
             Integer id = Integer.parseInt(idProduct);
@@ -77,9 +87,13 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
                 throw new DAOException("Comment not correct");
             }
         } catch (NumberFormatException | DAOException e) {
-            transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
             logger.error(e);
-            throw new DAOException(e);
+            throw new ServiceException(e);
         }
     }
 
@@ -87,19 +101,28 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
      * delete comment by id.
      *
      * @param idComment id comment.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     @Override
-    public void deleteComment(String idComment) throws DAOException {
-        CommentDAO dao = transaction.createDao(TypeDao.COMMENT);
+    public void deleteComment(String idComment) throws ServiceException {
+        CommentDAO dao = null;
+        try {
+            dao = transaction.createDao(TypeDao.COMMENT);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         try {
             Integer id = Integer.parseInt(idComment);
             dao.delete(id);
             transaction.commit();
         } catch (NumberFormatException | DAOException e) {
-            transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
             logger.error(e);
-            throw new DAOException(e);
+            throw new ServiceException(e);
         }
     }
 }

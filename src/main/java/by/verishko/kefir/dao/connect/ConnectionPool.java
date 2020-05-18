@@ -1,6 +1,6 @@
 package by.verishko.kefir.dao.connect;
 
-import by.verishko.kefir.dao.exception.ConnectionError;
+import by.verishko.kefir.dao.connect.exception.ConnectionError;
 import by.verishko.kefir.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -197,7 +197,8 @@ public class ConnectionPool {
             usedConnections.put(connection);
         } catch (InterruptedException e) {
             logger.error("Утечка соединения" + e);
-            logger.debug(String.format("Connection was received from pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
+            logger.debug(String.format("Connection was received from pool. Current pool size: %d used connections; %d free connection",
+                    usedConnections.size(), freeConnections.size()));
             Thread.currentThread().interrupt();
         }
         return connection;
@@ -216,7 +217,8 @@ public class ConnectionPool {
                 usedConnections.remove(connection);
                 freeConnections.offer(connection);
 
-                String message = String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size());
+                String message = String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection",
+                        usedConnections.size(), freeConnections.size());
                 logger.debug(message);
             }
         } catch (SQLException e1) {

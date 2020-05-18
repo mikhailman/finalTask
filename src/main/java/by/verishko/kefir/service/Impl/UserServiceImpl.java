@@ -6,6 +6,7 @@ import by.verishko.kefir.entity.User;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.UserService;
 import by.verishko.kefir.service.exception.ServiceException;
+import by.verishko.kefir.service.validation.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,11 +19,27 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
      */
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
+    /**
+     * The validator provides the different types of checks for a given
+     * parameters.
+     */
+    private Validator validator;
+
     @Override
-    public User registerUser(User user, String repeatPassword) throws DAOException {
-        UserDAO dao = transaction.createDao(TypeDao.USER);
-        // TODO: 02.04.2020 добавить валидатор!
+    public User registerUser(User user, String repeatPassword) throws ServiceException {
+        UserDAO dao = null;
         try {
+            dao = transaction.createDao(TypeDao.USER);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            if (!validator.validatePassword(repeatPassword)) {
+                throw new ServiceException("Password is not valid");
+            }
+
+            // TODO: 02.04.2020 добавить валидатор!
+
 // TODO: 07.05.2020 хэширование пароля!
             Integer id;
             id = dao.createUser(user);
@@ -33,14 +50,24 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             logger.debug("user successfully registered");
             return resultUser;
         } catch (DAOException e) {
-            transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
             logger.error(e + "user registration fail");
-            throw new DAOException(e);
+            throw new ServiceException(e);
         }
     }
 
-    public User findUserByEmail(final String email, final String password) throws DAOException, ServiceException {
-        UserDAO dao = transaction.createDao(TypeDao.USER);
+
+    public User findUserByEmail(final String email, final String password) throws ServiceException {
+        UserDAO dao = null;
+        try {
+            dao = transaction.createDao(TypeDao.USER);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         logger.debug("Email and password From findUserByEmail (UserServiceImpl) " + email + " " + password);
         try {
             Optional<User> user = dao.getPassword(email);
@@ -54,14 +81,23 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
                 throw new ServiceException("unknownUser");
             }
         } catch (DAOException e) {
-            transaction.rollback();
-            throw new DAOException(e);
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
+            throw new ServiceException(e);
         }
     }
 
     @Override
-    public User getUser(final Integer id) throws DAOException {
-        UserDAO dao = transaction.createDao(TypeDao.USER);
+    public User getUser(final Integer id) throws ServiceException {
+        UserDAO dao = null;
+        try {
+            dao = transaction.createDao(TypeDao.USER);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         try {
             Optional<User> user = dao.read(id);
             transaction.commit();
@@ -71,15 +107,24 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
                 throw new DAOException();
             }
         } catch (DAOException e) {
-            transaction.rollback();
-            throw new DAOException(e);
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
+            throw new ServiceException(e);
         }
     }
 
     @Override
     public void updateUser(User newUser, Integer idUser, String oldPassword,
-                           String repeatPassword) throws DAOException {
-        UserDAO dao = transaction.createDao(TypeDao.USER);
+                           String repeatPassword) throws ServiceException {
+        UserDAO dao = null;
+        try {
+            dao = transaction.createDao(TypeDao.USER);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
 
         try {
             Optional<User> oldUser = dao.findAllUserInfo(idUser);
@@ -99,9 +144,13 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             transaction.commit();
             logger.debug("user successfully updated");
         } catch (DAOException e) {
-            transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
             logger.error(e + "user don't update");
-            throw new DAOException(e);
+            throw new ServiceException(e);
         }
     }
 
@@ -111,16 +160,25 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
      * @return all users.
      */
     @Override
-    public List<User> findAll() throws DAOException {
+    public List<User> findAll() throws ServiceException {
         List<User> userList = null;
-        UserDAO dao = transaction.createDao(TypeDao.USER);
+        UserDAO dao = null;
+        try {
+            dao = transaction.createDao(TypeDao.USER);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         try {
             userList = dao.findAll();
             transaction.commit();
         } catch (DAOException e) {
             logger.error(e);
-            transaction.rollback();
-            throw new DAOException(e);
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
+            throw new ServiceException(e);
         }
         return userList;
     }

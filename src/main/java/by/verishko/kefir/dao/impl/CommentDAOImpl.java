@@ -16,9 +16,9 @@ import java.util.List;
 
 public class CommentDAOImpl extends BaseDao implements CommentDAO {
 
-    private static final String GET_COMMENTS = "SELECT `id`, `name`, `body`, `users_id` FROM `comments` WHERE `products_id` = ?";
-    private static final String CREATE_COMMENT = "INSERT INTO `comments` (`name`, `body`, `users_id`, `goods_id`) VALUES (?, ?, ?, ?)";
-    private static final String DELETE_COMMENT = "DELETE FROM `comments` WHERE `id` = ?";
+    private static final String GET_COMMENTS = "SELECT id, name, body, users_id FROM comments WHERE kefir.comments.products_id = ?";
+    private static final String CREATE_COMMENT = "INSERT INTO `comments` (name, body, users_id, products_id) VALUES (?, ?, ?, ?)";
+    private static final String DELETE_COMMENT = "DELETE FROM `comments` WHERE id = ?";
 
     /**
      * Logger of class.

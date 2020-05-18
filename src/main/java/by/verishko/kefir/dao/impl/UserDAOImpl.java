@@ -21,7 +21,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     private static final String CREATE_USER = "INSERT INTO `users` (`login`, `password`, `email`, " +
             "`phone`, `name`, `surname`) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private static final String SELECT_ALL_USERS = "SELECT `id`, `login` FROM `users`";
+    private static final String SELECT_ALL_USERS = "SELECT id, login, password, email, name, surname FROM `users` AS u WHERE status != 0;";
 
     private static final String SELECT_USER_BY_ID = "SELECT users.name FROM user WHERE id = ?";
 
@@ -32,15 +32,14 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
 
 //    private static final String DELETE_USER_BY_ID = "UPDATE `users` SET `status` = ? FROM `users` WHERE `id` = ?";
 
-    private static final String UPDATE_USER = "UPDATE `users` SET `role` = ?, `login` = ?, `password` = ?," +
-            " `email` = ?, `phone` = ?, `name` = ?, `surname` = ?, `status` = ?, `date_registration` = ?, " +
-            " WHERE kefir.users.`id` = ?";
+    private static final String UPDATE_USER = "UPDATE users SET role = ?, login = ?, password = ?," +
+            " email = ?, phone = ?, name = ?, surname = ?, status = ?, date_registration = ? WHERE kefir.users.id = ?;";
 
     private static final String SELECT_USER_BY_LOGIN_PWD = "SELECT id, login FROM users WHERE login = ? " +
             "and password = ?";
 
-    private static final String GET_ALL_INFO_BY_ID = "SELECT `id`, `role`, `login`, `password`, `email`, `phone`, `name`, " +
-            "`surname`, `status`, `date_registration` FROM `users` WHERE `id` = ?";
+    private static final String GET_ALL_INFO_BY_ID = "SELECT id, role, login, password, email, phone, name, " +
+            "surname, status, date_registration FROM users WHERE `id` = ?";
 
     private static final String GET_PASSWORD = "SELECT `id`,`password` FROM kefir.`users` WHERE `email` = ?";
 
@@ -245,21 +244,25 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
      */
     @Override
     public List<User> findAll() throws DAOException {
-        List<User> list = new ArrayList<>();
-        ResultSet resultSet = null;
-        try {
-            resultSet = connection.createStatement().executeQuery(SELECT_ALL_USERS);
-            while (resultSet.next()) {
-                User user = new User();
-                user.setLogin(resultSet.getString("login"));
-                user.setId(Integer.parseInt(resultSet.getString("id")));
-                list.add(user);
+        List<User> users = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setIdUser(Integer.parseInt(resultSet.getString("id")));
+                    user.setLogin(resultSet.getString("login"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setName(resultSet.getString("name"));
+                    user.setSurname(resultSet.getString("surname"));
+                    users.add(user);
+                }
             }
         } catch (SQLException e) {
             logger.error(e);
             throw new DAOException(e);
         }
-        return list;
+        return users;
     }
 
     /**

@@ -17,7 +17,7 @@ public interface DAO<Type extends Entity> {
      */
     Logger logger = LogManager.getLogger(DAO.class.getName());
 
-    default Type create(final Type entity) throws DAOException {
+    default Integer create(final Type entity) throws DAOException {
         throw new DAOException();
     }
 

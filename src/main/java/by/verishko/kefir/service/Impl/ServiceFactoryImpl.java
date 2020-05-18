@@ -6,6 +6,7 @@ import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.Service;
 import by.verishko.kefir.service.ServiceFactory;
+import by.verishko.kefir.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,15 +22,15 @@ public class ServiceFactoryImpl implements ServiceFactory {
         this.transactionFactory = transactionFactory;
     }
 
-    public ServiceImpl getService(final TypeDao key) throws DAOException {
+    public ServiceImpl getService(final TypeDao key) throws ServiceException {
         ServiceImpl service;
         switch (key) {
             case USER:
                 service = new UserServiceImpl();
                 break;
-//            case PRODUCT:
-//                service = new ProductServiceImpl();
-//                break;
+            case PRODUCT:
+                service = new ProductServiceImpl();
+                break;
             case CATEGORY:
                 service = new CategoryServiceImpl();
                 break;
@@ -45,14 +46,15 @@ public class ServiceFactoryImpl implements ServiceFactory {
             default:
                 String message = "Incorrect type of Service " + key;
                 logger.error(message);
-                throw new DAOException(message);
+                throw new ServiceException(message);
         }
         return service;
     }
 
     @Override
-    public <Type extends Service> Type createService(TypeDao key) throws DAOException {
-        ServiceImpl service = getService(key);
+    public <Type extends Service> Type createService(TypeDao key) throws ServiceException {
+        ServiceImpl service = null;
+        service = getService(key);
         Transaction transaction = transactionFactory.createTransaction();
         service.setTransaction(transaction);
         return (Type) service;

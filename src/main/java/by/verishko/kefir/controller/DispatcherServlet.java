@@ -10,6 +10,7 @@ import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.dao.impl.TransactionFactoryImpl;
 import by.verishko.kefir.service.Impl.ServiceFactoryImpl;
 import by.verishko.kefir.service.ServiceFactory;
+import by.verishko.kefir.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -109,8 +110,15 @@ public class DispatcherServlet extends HttpServlet {
      * @see ServletResponse#setContentType
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            process(request, response);
+        } catch (ServletException e) {
+            logger.error("request for the GET could not be handled", e);
+        } catch (IOException e) {
+            logger.error("I/O error is detected when the servlet handles"
+                    + " the GET request", e);
+        }
     }
 
     /**
@@ -178,9 +186,9 @@ public class DispatcherServlet extends HttpServlet {
             CommandManager commandManager = CommandManagerFactory.getManager(getFactory());
 //            commandManager.execute(menu, request, response);
             commandManager.execute(command, request, response);
-//            commandManager.close();
+            commandManager.close();
 
-        } catch (DAOException e) {
+        } catch (DAOException | ServiceException e) {
             logger.error("It is impossible to process request %s %s" + e.getMessage() + e);
             request.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
         }

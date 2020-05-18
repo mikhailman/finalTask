@@ -2,6 +2,7 @@ package by.verishko.kefir.service;
 
 import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.Category;
+import by.verishko.kefir.service.exception.ServiceException;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface CategoryService extends Service {
      * @return list category.
      * @throws DAOException sql exception.
      */
-    List<Category> getCategory() throws DAOException;
+    List<Category> getCategory() throws ServiceException;
 }

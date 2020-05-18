@@ -3,6 +3,7 @@ package by.verishko.kefir.service;
 import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.Comment;
 import by.verishko.kefir.entity.User;
+import by.verishko.kefir.service.exception.ServiceException;
 
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public interface CommentService extends Service {
      * @return map with user info and his comment.
      * @throws DAOException sql exception.
      */
-    Map<Comment, User> getComment(final Integer idProduct) throws DAOException;
+    Map<Comment, User> getComment(final Integer idProduct) throws ServiceException;
 
     /**
      * Add comment to announcement.
@@ -24,7 +25,7 @@ public interface CommentService extends Service {
      * @param idUser    id user.
      * @throws DAOException sql exception.
      */
-    void addComment(final String idProduct, final String comment, final Integer idUser) throws DAOException;
+    void addComment(final String idProduct, final String comment, final Integer idUser) throws ServiceException;
 
     /**
      * delete comment by id user .
@@ -32,5 +33,5 @@ public interface CommentService extends Service {
      * @param idComment id comment.
      * @throws DAOException sql exception.
      */
-    void deleteComment(final String idComment) throws DAOException;
+    void deleteComment(final String idComment) throws ServiceException;
 }

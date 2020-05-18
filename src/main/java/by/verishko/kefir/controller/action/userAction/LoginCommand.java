@@ -25,7 +25,7 @@ public class LoginCommand extends UserAction {
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
     @Override
-    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 //        HttpSession session = request.getSession(true);
         String login = request.getParameter("email");

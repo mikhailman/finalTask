@@ -1,12 +1,5 @@
 /**
- * In this package there are classes of such entities as:
- * Category,
- * Comment,
- * Abstract entity,
- * Image,
- * Location,
- * Product,
- * User.
+ * Package contains entity classes is used to store data from database.
  */
 package by.verishko.kefir.entity;
 

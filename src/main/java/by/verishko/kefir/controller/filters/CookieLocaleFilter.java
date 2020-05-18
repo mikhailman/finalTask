@@ -8,6 +8,9 @@ import java.io.IOException;
 
 public class CookieLocaleFilter implements Filter {
 
+    /**
+     * Sets the maximum age in seconds for this Cookie.
+     */
     private static final int MAX_AGE = 24 * 60 * 60;
 
     /**

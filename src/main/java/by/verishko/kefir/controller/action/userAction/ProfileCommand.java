@@ -5,6 +5,7 @@ import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.User;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.UserService;
+import by.verishko.kefir.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 public class ProfileCommand extends UserAction {
     @Override
-    public void exec(HttpServletRequest request, HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, ServletException, IOException {
         UserService service = factory.createService(TypeDao.USER);
         User user = (User) request.getSession().getAttribute("authorizedUser");
         user = service.getUser(user.getIdUser());

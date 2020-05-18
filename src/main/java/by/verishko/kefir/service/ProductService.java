@@ -1,7 +1,7 @@
 package by.verishko.kefir.service;
 
-import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.Product;
+import by.verishko.kefir.service.exception.ServiceException;
 
 public interface ProductService extends Service {
 
@@ -10,33 +10,33 @@ public interface ProductService extends Service {
      *
      * @param product object product.
      * @param idUser  user id.
-     * @throws DAOException no validate parameter product.
+     * @throws ServiceException no validate parameter product.
      */
-    void createProduct(final Product product, final Integer idUser) throws DAOException;
+    void createProduct(final Product product, final Integer idUser) throws ServiceException;
 
     /**
      * get product by user id.
      *
      * @param idUser user id.
      * @return product that found
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
-    Product getProduct(final Integer idUser) throws DAOException;
+    Product getProduct(final Integer idUser) throws ServiceException;
 
     /**
      * Update product
      *
      * @param product new parameter's product.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
-    void updateProduct(final Product product) throws DAOException;
+    void updateProduct(final Product product) throws ServiceException;
 
     /**
      * Delete product.
      *
      * @param idProduct id product.
-     * @throws DAOException sql exception or number format id product.
+     * @throws ServiceException sql exception or number format id product.
      */
-    void deleteProduct(final String idProduct) throws DAOException;
+    void deleteProduct(final String idProduct) throws ServiceException;
 
 }

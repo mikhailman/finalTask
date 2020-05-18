@@ -5,6 +5,7 @@ import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.User;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.UserService;
+import by.verishko.kefir.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +19,17 @@ public class DisplayAllUsers extends AdminAction {
 
     @Override
     public void exec(final HttpServletRequest request,
-                     final HttpServletResponse response) throws DAOException, ServletException, IOException {
-        UserService userService = factory.createService(TypeDao.USER);
+                     final HttpServletResponse response) throws ServletException, IOException, ServiceException {
+        UserService userService = null;
+
+        userService = factory.createService(TypeDao.USER);
+
         List<User> list = userService.findAll();
 
         request.setAttribute(LIST_OF_USERS_ATTRIBUTE, list);
-        request.getRequestDispatcher(ConstantsPath.LIST_OF_USERS_JSP).forward(request, response);
+        request.getRequestDispatcher(ConstantsPath.LIST_OF_USERS_JSP).
+
+                forward(request, response);
 
     }
 }

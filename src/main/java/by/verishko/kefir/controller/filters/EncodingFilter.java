@@ -5,6 +5,39 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class EncodingFilter implements Filter {
+
+    /**
+     * Represents the default encoding value.
+     */
+    private String defaultEncoding;
+
+    /**
+     * <p>Called by the web container
+     * to indicate to a filter that it is being placed into service.</p>
+     *
+     * <p>The servlet container calls the init
+     * method exactly once after instantiating the filter. The init
+     * method must complete successfully before the filter is asked to do any
+     * filtering work.</p>
+     *
+     * <p>The web container cannot place the filter into service if the init
+     * method either</p>
+     * <ol>
+     * <li>Throws a ServletException
+     * <li>Does not return within a time period defined by the web container
+     * </ol>
+     *
+     * @param filterConfig a <code>FilterConfig</code> object containing the
+     *                     filter's configuration and initialization parameters
+     * @throws ServletException if an exception has occurred that interferes with
+     *                          the filter's normal operation
+     * @implSpec The default implementation takes no action.
+     */
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        defaultEncoding = filterConfig.getInitParameter("defaultEncoding");
+    }
+
     /**
      * The <code>doFilter</code> method of the Filter is called by the
      * container each time a request/response pair is passed through the
@@ -46,9 +79,34 @@ public class EncodingFilter implements Filter {
         request.setCharacterEncoding("UTF-8");
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setCharacterEncoding("UTF-8");
+        //HTTP 1.1
         httpResponse.setHeader("Cache-Control", "no-cache");
+        //HTTP 1.0
 //        httpResponse.setHeader("Pragma", "no-cache");
+        //prevents caching at the proxy server
 //        httpResponse.setDateHeader("Expires", 0);
         chain.doFilter(request, response);
+    }
+
+    /**
+     * <p>Called by the web container
+     * to indicate to a filter that it is being
+     * taken out of service.</p>
+     *
+     * <p>This method is only called once all threads within the filter's
+     * doFilter method have exited or after a timeout period has passed.
+     * After the web container calls this method, it will not call the
+     * doFilter method again on this instance of the filter.</p>
+     *
+     * <p>This method gives the filter an opportunity to clean up any
+     * resources that are being held (for example, memory, file handles,
+     * threads) and make sure that any persistent state is synchronized
+     * with the filter's current state in memory.</p>
+     *
+     * @implSpec The default implementation takes no action.
+     */
+    @Override
+    public void destroy() {
+        defaultEncoding = null;
     }
 }

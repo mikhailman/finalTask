@@ -14,12 +14,12 @@ import java.util.Optional;
 
 public class ProductDAOImpl extends BaseDao implements ProductDAO {
 
-    private static final String CREATE_PRODUCT = "INSERT INTO `products` (`name`, `description`, `price`, `date_creation`, `users_id`, `category_id`) VALUES (?,?,?,?,?,?)";
-    private static final String GET_ALL = "SELECT `id`, `name`, `description`, `price`, `date_creation`, `users_id`, `category_id` FROM `products` ORDER BY `date_creation` DESC";
-    private static final String GET_BY_ID_USER = "SELECT `id`, `name`, `description`, `price`, `date_creation`, `category_id` FROM `products` WHERE `users_id` = ? ORDER BY `date_creation` DESC";
-    private static final String GET_BY_ID_PRODUCT = "SELECT `id`, `name`, `description`, `price`, `date_creation`, `category_id` FROM `products` WHERE `users_id` = ?";
-    private static final String UPDATE_PRODUCT = "UPDATE `products` SET `name` = ?, `description` = ?, `price` = ?, `date_creation` = ?, `category_id` = ? WHERE `users_id` = ?";
-    private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM `products` WHERE `id` = ?";
+    private static final String CREATE_PRODUCT = "INSERT INTO products (name, description, price, date_creation, users_id, category_id) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String GET_ALL = "SELECT id, name, description, price, date_creation, users_id, category_id FROM products ORDER BY date_creation DESC";
+    private static final String GET_BY_ID_USER = "SELECT id, name, description, price, date_creation, category_id FROM products WHERE users_id = ? ORDER BY date_creation DESC";
+    private static final String GET_BY_ID_PRODUCT = "SELECT id, name, description, price, date_creation, category_id FROM `products` WHERE id = ? ORDER BY date_creation DESC";
+    private static final String UPDATE_PRODUCT = "UPDATE products SET name = ?, description = ?, price = ?, date_creation = ?, category_id = ? WHERE id = ?";
+    private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM products WHERE id = ?";
 
     /**
      * Logger of class.

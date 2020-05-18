@@ -15,8 +15,8 @@ import java.util.List;
 
 public class CategoryDAOImpl extends BaseDao implements CategoryDAO {
 
-    private static final String READ_ALL = "SELECT `id`, `name` from `category`";
-    private static final String CREATE_CATEGORY = "INSERT INTO `category` (`name`) VALUES (?)";
+    private static final String READ_ALL = "SELECT id, name from category ORDER BY name";
+    private static final String CREATE_CATEGORY = "INSERT INTO category (name) VALUES (?)";
 
     /**
      * Logger of class.

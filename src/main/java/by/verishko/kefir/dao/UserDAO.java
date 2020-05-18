@@ -2,6 +2,7 @@ package by.verishko.kefir.dao;
 
 import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.User;
+import by.verishko.kefir.service.exception.ServiceException;
 
 import java.util.Optional;
 
