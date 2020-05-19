@@ -12,6 +12,8 @@ public interface UserDAO extends DAO<User> {
 
     User findUserByLoginAndPassword(String login, String password) throws DAOException;
 
+    Boolean readByEmailAndNickname(final User user) throws DAOException;
+
     Optional<User> getPassword(final String email) throws DAOException;
 
     Optional<User> findAllUserInfo(final Integer id) throws DAOException;

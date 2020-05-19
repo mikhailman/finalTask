@@ -1,6 +1,5 @@
 package by.verishko.kefir.controller.action.userAction;
 
-import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.Category;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.CategoryService;

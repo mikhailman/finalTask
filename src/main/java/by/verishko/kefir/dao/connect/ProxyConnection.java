@@ -14,10 +14,10 @@ public class ProxyConnection implements Connection {
     /**
      * Constructor ProxyConnection.
      *
-     * @param connection .
+     * @param connectionValue .
      */
-    ProxyConnection(Connection connection) {
-        this.connection = connection;
+    ProxyConnection(final Connection connectionValue) {
+        this.connection = connectionValue;
     }
 
     /**
@@ -76,7 +76,7 @@ public class ProxyConnection implements Connection {
      *                      or this method is called on a closed connection
      */
     @Override
-    public PreparedStatement prepareStatement(String sql) throws SQLException {
+    public PreparedStatement prepareStatement(final String sql) throws SQLException {
         return connection.prepareStatement(sql);
     }
 
@@ -111,7 +111,7 @@ public class ProxyConnection implements Connection {
      *                      or this method is called on a closed connection
      */
     @Override
-    public CallableStatement prepareCall(String sql) throws SQLException {
+    public CallableStatement prepareCall(final String sql) throws SQLException {
         return connection.prepareCall(sql);
     }
 
@@ -128,7 +128,7 @@ public class ProxyConnection implements Connection {
      *                      or this method is called on a closed connection
      */
     @Override
-    public String nativeSQL(String sql) throws SQLException {
+    public String nativeSQL(final String sql) throws SQLException {
         return connection.nativeSQL(sql);
     }
 
@@ -168,7 +168,7 @@ public class ProxyConnection implements Connection {
      * @see #getAutoCommit
      */
     @Override
-    public void setAutoCommit(boolean autoCommit) throws SQLException {
+    public void setAutoCommit(final boolean autoCommit) throws SQLException {
         connection.setAutoCommit(autoCommit);
     }
 
@@ -229,9 +229,6 @@ public class ProxyConnection implements Connection {
      */
     @Override
     public void close() throws SQLException {
-//        if (!this.getAutoCommit()) {
-//            this.setAutoCommit(true);
-//        }
         ConnectionPool.getInstance().releaseConnection(this);
     }
 
@@ -307,7 +304,7 @@ public class ProxyConnection implements Connection {
      *                      method is called during a transaction
      */
     @Override
-    public void setReadOnly(boolean readOnly) throws SQLException {
+    public void setReadOnly(final boolean readOnly) throws SQLException {
         connection.setReadOnly(readOnly);
     }
 
@@ -347,7 +344,7 @@ public class ProxyConnection implements Connection {
      * @see #getCatalog
      */
     @Override
-    public void setCatalog(String catalog) throws SQLException {
+    public void setCatalog(final String catalog) throws SQLException {
         connection.setCatalog(catalog);
     }
 
@@ -388,7 +385,7 @@ public class ProxyConnection implements Connection {
      * @see #getTransactionIsolation
      */
     @Override
-    public void setTransactionIsolation(int level) throws SQLException {
+    public void setTransactionIsolation(final int level) throws SQLException {
         connection.setTransactionIsolation(level);
     }
 
@@ -481,7 +478,7 @@ public class ProxyConnection implements Connection {
      * @since 1.2
      */
     @Override
-    public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+    public Statement createStatement(final int resultSetType, final int resultSetConcurrency) throws SQLException {
         return connection.createStatement(resultSetType, resultSetConcurrency);
     }
 
@@ -517,7 +514,7 @@ public class ProxyConnection implements Connection {
      * @since 1.2
      */
     @Override
-    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+    public PreparedStatement prepareStatement(final String sql, final int resultSetType, final int resultSetConcurrency) throws SQLException {
         return connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
     }
 
@@ -552,7 +549,7 @@ public class ProxyConnection implements Connection {
      * @since 1.2
      */
     @Override
-    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+    public CallableStatement prepareCall(final String sql, final int resultSetType, final int resultSetConcurrency) throws SQLException {
         return connection.prepareCall(sql, resultSetType, resultSetConcurrency);
     }
 
@@ -615,7 +612,7 @@ public class ProxyConnection implements Connection {
      * @since 1.2
      */
     @Override
-    public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
+    public void setTypeMap(final Map<String, Class<?>> map) throws SQLException {
         connection.setTypeMap(map);
     }
 
@@ -639,7 +636,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public void setHoldability(int holdability) throws SQLException {
+    public void setHoldability(final int holdability) throws SQLException {
         connection.setHoldability(holdability);
     }
 
@@ -705,7 +702,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public Savepoint setSavepoint(String name) throws SQLException {
+    public Savepoint setSavepoint(final String name) throws SQLException {
         return connection.setSavepoint(name);
     }
 
@@ -729,7 +726,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public void rollback(Savepoint savepoint) throws SQLException {
+    public void rollback(final Savepoint savepoint) throws SQLException {
         connection.rollback(savepoint);
     }
 
@@ -748,7 +745,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+    public void releaseSavepoint(final Savepoint savepoint) throws SQLException {
         connection.releaseSavepoint(savepoint);
     }
 
@@ -787,7 +784,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+    public Statement createStatement(final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) throws SQLException {
         return connection.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
@@ -831,7 +828,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+    public PreparedStatement prepareStatement(final String sql, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) throws SQLException {
         return connection.prepareStatement(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
@@ -872,7 +869,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+    public CallableStatement prepareCall(final String sql, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) throws SQLException {
         return connection.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
@@ -919,7 +916,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException {
+    public PreparedStatement prepareStatement(final String sql, final int autoGeneratedKeys) throws SQLException {
         return connection.prepareStatement(sql, autoGeneratedKeys);
     }
 
@@ -968,7 +965,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
+    public PreparedStatement prepareStatement(final String sql, final int[] columnIndexes) throws SQLException {
         return connection.prepareStatement(sql, columnIndexes);
     }
 
@@ -1017,7 +1014,7 @@ public class ProxyConnection implements Connection {
      * @since 1.4
      */
     @Override
-    public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
+    public PreparedStatement prepareStatement(final String sql, final String[] columnNames) throws SQLException {
         return connection.prepareStatement(sql, columnNames);
     }
 
@@ -1120,7 +1117,7 @@ public class ProxyConnection implements Connection {
      * @since 1.6
      */
     @Override
-    public boolean isValid(int timeout) throws SQLException {
+    public boolean isValid(final int timeout) throws SQLException {
         return connection.isValid(timeout);
     }
 
@@ -1179,7 +1176,7 @@ public class ProxyConnection implements Connection {
      * @since 1.6
      */
     @Override
-    public void setClientInfo(String name, String value) throws SQLClientInfoException {
+    public void setClientInfo(final String name, final String value) throws SQLClientInfoException {
         connection.setClientInfo(name, value);
     }
 
@@ -1213,7 +1210,7 @@ public class ProxyConnection implements Connection {
      * <p>
      */
     @Override
-    public void setClientInfo(Properties properties) throws SQLClientInfoException {
+    public void setClientInfo(final Properties properties) throws SQLClientInfoException {
         connection.setClientInfo(properties);
     }
 
@@ -1240,7 +1237,7 @@ public class ProxyConnection implements Connection {
      * @since 1.6
      */
     @Override
-    public String getClientInfo(String name) throws SQLException {
+    public String getClientInfo(final String name) throws SQLException {
         return connection.getClientInfo(name);
     }
 
@@ -1292,7 +1289,7 @@ public class ProxyConnection implements Connection {
      * @since 1.6
      */
     @Override
-    public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+    public Array createArrayOf(final String typeName, final Object[] elements) throws SQLException {
         return connection.createArrayOf(typeName, elements);
     }
 
@@ -1310,7 +1307,7 @@ public class ProxyConnection implements Connection {
      * @since 1.6
      */
     @Override
-    public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
+    public Struct createStruct(final String typeName, final Object[] attributes) throws SQLException {
         return connection.createStruct(typeName, attributes);
     }
 
@@ -1334,7 +1331,7 @@ public class ProxyConnection implements Connection {
      * @since 1.7
      */
     @Override
-    public void setSchema(String schema) throws SQLException {
+    public void setSchema(final String schema) throws SQLException {
         connection.setSchema(schema);
     }
 
@@ -1390,7 +1387,7 @@ public class ProxyConnection implements Connection {
      * @since 1.7
      */
     @Override
-    public void abort(Executor executor) throws SQLException {
+    public void abort(final Executor executor) throws SQLException {
         connection.abort(executor);
     }
 
@@ -1484,7 +1481,7 @@ public class ProxyConnection implements Connection {
      * @since 1.7
      */
     @Override
-    public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+    public void setNetworkTimeout(final Executor executor, final int milliseconds) throws SQLException {
         connection.setNetworkTimeout(executor, milliseconds);
     }
 
@@ -1526,7 +1523,7 @@ public class ProxyConnection implements Connection {
      * @since 1.6
      */
     @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
+    public <T> T unwrap(final Class<T> iface) throws SQLException {
         return connection.unwrap(iface);
     }
 
@@ -1546,7 +1543,7 @@ public class ProxyConnection implements Connection {
      * @since 1.6
      */
     @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+    public boolean isWrapperFor(final Class<?> iface) throws SQLException {
         return connection.isWrapperFor(iface);
     }
 

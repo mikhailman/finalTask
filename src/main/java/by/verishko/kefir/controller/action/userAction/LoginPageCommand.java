@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class LoginPageCommand extends UserAction {
     @Override
-    public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void exec(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(ConstantsPath.LOGIN_PAGE).forward(request, response);
 
     }

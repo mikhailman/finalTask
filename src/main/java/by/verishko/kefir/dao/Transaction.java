@@ -11,6 +11,9 @@ public interface Transaction {
 
     void rollback() throws DAOException;
 
-    void end() throws DAOException;
+    default void end() throws DAOException {
+        throw new DAOException();
+    }
+
 
 }

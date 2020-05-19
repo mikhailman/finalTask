@@ -209,24 +209,25 @@ public class ConnectionPool {
      *
      * @param connection using connection of pool.
      */
-    void releaseConnection(ProxyConnection connection) {
-        try {
-            if (connection.isValid(checkConnectionTimeout)) {
-                connection.clearWarnings();
-                connection.setAutoCommit(true);
-                usedConnections.remove(connection);
-                freeConnections.offer(connection);
-
-                String message = String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection",
-                        usedConnections.size(), freeConnections.size());
-                logger.debug(message);
-            }
-        } catch (SQLException e1) {
-            logger.warn("It is impossible to return database connection into pool", e1);
+    void releaseConnection(final Connection connection) {
+        if (connection instanceof ProxyConnection) {
             try {
-                connection.getConnection().close();
-            } catch (SQLException e) {
-                logger.warn("error closed connection.");
+                if (usedConnections.remove(connection)) {
+                    freeConnections.offer((ProxyConnection) connection);
+                    connection.setAutoCommit(true);
+
+                    String message = String.format("Connection was returned into pool. " +
+                                    "Current pool size: %d used connections; %d free connection",
+                            usedConnections.size(), freeConnections.size());
+                    logger.debug(message);
+                }
+            } catch (SQLException e1) {
+                logger.warn("It is impossible to return database connection into pool", e1);
+                try {
+                    ((ProxyConnection) connection).getConnection().close();
+                } catch (SQLException e) {
+                    logger.warn("error closed connection.");
+                }
             }
         }
     }
@@ -237,7 +238,7 @@ public class ConnectionPool {
      */
     public void closePool() {
         ProxyConnection proxyConnection = null;
-        for (int i = 0; i < freeConnections.size(); i++) {
+        for (int i = 0; i < poolSize; i++) {
             try {
                 proxyConnection = freeConnections.take();
                 proxyConnection.realClose();

@@ -75,7 +75,7 @@ public class SecurityFilter implements Filter {
         if (flag) {
             chain.doFilter(request, response);
         } else {
-            logger.error("Ошибка доступа!");
+            logger.error("Access Error!");
             httpRequest.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
         }
     }

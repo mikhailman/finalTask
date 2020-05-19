@@ -18,8 +18,10 @@ import java.util.Optional;
 
 public class UserDAOImpl extends BaseDao implements UserDAO {
 
-    private static final String CREATE_USER = "INSERT INTO `users` (`login`, `password`, `email`, " +
-            "`phone`, `name`, `surname`) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String CREATE_USER = "INSERT INTO users (login, password, email, " +
+            "phone, name, surname) VALUES (?, ?, ?, ?, ?, ?)";
+
+    private static final String GET_USER_INFO = "SELECT users.id FROM users WHERE email = ? OR login = ?";
 
     private static final String SELECT_ALL_USERS = "SELECT id, login, password, email, name, surname FROM `users` AS u WHERE status != 0;";
 
@@ -32,8 +34,8 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
 
 //    private static final String DELETE_USER_BY_ID = "UPDATE `users` SET `status` = ? FROM `users` WHERE `id` = ?";
 
-    private static final String UPDATE_USER = "UPDATE users SET role = ?, login = ?, password = ?," +
-            " email = ?, phone = ?, name = ?, surname = ?, status = ?, date_registration = ? WHERE kefir.users.id = ?;";
+    private static final String UPDATE_USER = "UPDATE users SET login = ?, password = ?," +
+            " email = ?, phone = ?, name = ?, surname = ? WHERE kefir.users.id = ?;";
 
     private static final String SELECT_USER_BY_LOGIN_PWD = "SELECT id, login FROM users WHERE login = ? " +
             "and password = ?";
@@ -63,40 +65,6 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
      * @throws DAOException - generating if some values conflicts
      *                      with existed in database.
      */
-//    @Override
-//    public User create(User user) throws DAOException {
-//        PreparedStatement statement = null;
-//        try {
-//            statement = connection.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS);
-////            statementUpdateInfoUser(user, statement);
-//            statement.setInt(1, user.getRole().getIdRole());
-//            statement.setString(2, user.getLogin());
-//            statement.setString(3, user.getPassword());
-//            statement.setString(4, user.getEmail());
-//            statement.setLong(5, user.getPhone());
-//            statement.setString(6, user.getName());
-//            statement.setString(7, user.getSurname());
-//            statement.setBoolean(8, user.isActiveStatus());
-//            statement.setString(9, user.getDate_registration().toString());
-//            statement.executeUpdate();
-//            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-//                if (resultSet.next()) {
-//                    int userId = resultSet.getInt(1);
-//                    user.setId(userId);
-//                } else {
-//                    logger.error("There is no autoincremented index after trying to add record into table `users`");
-//                    throw new DAOException();
-//                }
-//            }
-//        } catch (SQLException e) {
-//            logger.error(e);
-//            throw new DAOException(e);
-//        } finally {
-//            close(statement);
-//            close(connection);
-//        }
-//        return user;
-//    }
     @Override
     public Integer createUser(final User user) throws DAOException {
         PreparedStatement statement = null;
@@ -112,6 +80,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             statement.executeUpdate();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
+                    logger.debug("UserServiceImpl " + resultSet.getInt(1));
                     return resultSet.getInt(1);
                 } else {
                     logger.error("There is no autoincremented index after trying to add record into table `users`");
@@ -126,20 +95,6 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             close(connection);
         }
     }
-
-//    private void statementUpdateInfoUser(User user, PreparedStatement statement) throws SQLException {
-//        statement.setInt(1, user.getIdUser());
-//        statement.setString(2, user.getLogin());
-//        statement.setString(3, user.getPassword());
-//        statement.setString(4, user.getEmail());
-//        statement.setLong(5, user.getPhone());
-//        statement.setString(6, user.getName());
-//        statement.setString(7, user.getSurname());
-//        statement.setBoolean(8, user.isActiveStatus());
-//        statement.setString(9, user.getDate_registration().toString());
-//        statement.setInt(10, user.getRole().getIdRole());
-//        statement.executeUpdate();
-//    }
 
     /**
      * Save new user to database.
@@ -187,22 +142,17 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     public User update(User user) throws DAOException {
         PreparedStatement statement = null;
         try {
-
-//            "UPDATE `users` SET `login` = ?, `password` = ?, `email` = ?, " +
-//                    "`phone` = ?, `name` = ?, `surname` = ?, `status` = ?, `date_registration` = ?, " +
-//                    "`role` = ? WHERE `users.id` = ?";
-
             statement = connection.prepareStatement(UPDATE_USER);
 //            statementUpdateInfoUser(user, statement);
-            statement.setInt(1, user.getRole().getIdRole());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPhone());
-            statement.setString(6, user.getName());
-            statement.setString(7, user.getSurname());
-            statement.setBoolean(8, user.isActiveStatus());
-            statement.setString(9, user.getDate_registration().toString());
+//            statement.setInt(1, user.getRole().getIdRole());
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPhone());
+            statement.setString(5, user.getName());
+            statement.setString(6, user.getSurname());
+//            statement.setBoolean(8, user.isActiveStatus());
+//            statement.setString(7, user.getDate_registration().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -303,6 +253,23 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     }
 
     @Override
+    public Boolean readByEmailAndNickname(User user) throws DAOException {
+        try (PreparedStatement statement = connection.prepareStatement(GET_USER_INFO)) {
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getLogin());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return !resultSet.next();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(connection);
+        }
+    }
+
+    @Override
     public Optional<User> getPassword(final String email) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(GET_PASSWORD)) {
 
@@ -325,6 +292,8 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
         } catch (
                 SQLException e) {
             throw new DAOException(e);
+        } finally {
+            close(connection);
         }
     }
 
@@ -365,6 +334,8 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            close(connection);
         }
     }
 }

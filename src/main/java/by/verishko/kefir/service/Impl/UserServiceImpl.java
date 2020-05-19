@@ -3,6 +3,7 @@ package by.verishko.kefir.service.Impl;
 import by.verishko.kefir.dao.UserDAO;
 import by.verishko.kefir.dao.exception.DAOException;
 import by.verishko.kefir.entity.User;
+import by.verishko.kefir.entity.enumEntity.Role;
 import by.verishko.kefir.entity.enumEntity.TypeDao;
 import by.verishko.kefir.service.UserService;
 import by.verishko.kefir.service.exception.ServiceException;
@@ -34,9 +35,19 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         try {
-            if (!validator.validatePassword(repeatPassword)) {
-                throw new ServiceException("Password is not valid");
-            }
+//            boolean flag = dao.readByEmailAndNickname(user);
+//            if (!flag) {
+//                throw new ServiceException("errorLogin");
+//            }
+//            String salt = PasswordUtils.getSalt();
+//            String hashPassword = PasswordUtils.generateHashPassword(user.getPassword(), salt);
+//            user.setPassword(hashPassword);
+            user.setRole(user.getRole());
+            logger.debug("UserServiceImpl ROLE " + user.getRole());
+
+//            if (!validator.validatePassword(repeatPassword)) {
+//                throw new ServiceException("Password is not valid");
+//            }
 
             // TODO: 02.04.2020 добавить валидатор!
 
@@ -46,6 +57,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             User resultUser = new User();
             resultUser.setIdUser(id);
             resultUser.setRole(user.getRole());
+            logger.debug("UserServiceImpl " + resultUser.getRole());
             transaction.commit();
             logger.debug("user successfully registered");
             return resultUser;

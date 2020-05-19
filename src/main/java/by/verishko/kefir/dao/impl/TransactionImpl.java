@@ -52,7 +52,7 @@ public class TransactionImpl implements Transaction {
     }
 
     @Override
-    public <Type extends DAO<?>> Type createDao(TypeDao key) throws DAOException {
+    public <Type extends DAO<?>> Type createDao(final TypeDao key) throws DAOException {
         BaseDao baseDao = getDao(key);
         baseDao.setConnection(connection);
         return (Type) baseDao;
@@ -61,7 +61,10 @@ public class TransactionImpl implements Transaction {
     @Override
     public void commit() throws DAOException {
         try {
+            connection.setAutoCommit(false);
+            logger.debug("BEFORE COMMIT from TransactionImpl " + connection.getAutoCommit());
             connection.commit();
+            logger.debug("COMMIT from TransactionImpl " + connection.getAutoCommit());
         } catch (SQLException e) {
             logger.error(e);
             throw new DAOException();
@@ -78,19 +81,19 @@ public class TransactionImpl implements Transaction {
         }
     }
 
-    @Override
-    public void end() throws DAOException {
-        if (connection != null) {
-            try {
-                if (!connection.getAutoCommit()) {
-                    connection.setAutoCommit(true);
-                }
-                connection.close();
-            } catch (SQLException e) {
-                logger.error(e);
-                throw new DAOException();
-            }
-            connection = null;
-        }
-    }
+//    @Override
+//    public void end() throws DAOException {
+//        if (connection != null) {
+//            try {
+//                if (!connection.getAutoCommit()) {
+//                    connection.setAutoCommit(true);
+//                }
+//                connection.close();
+//            } catch (SQLException e) {
+//                logger.error(e);
+//                throw new DAOException();
+//            }
+//            connection = null;
+//        }
+//    }
 }
