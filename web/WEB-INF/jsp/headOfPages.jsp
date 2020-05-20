@@ -63,11 +63,11 @@
                 </div>
             </div>
 
-                <%--            <c:set var="errorPage" value="/kefir/WEB-INF/jsp/error.jsp"/>--%>
+            <c:set var="errorPage" value="/kefir/WEB-INF/jsp/error.jsp"/>
 
 
-                <%--            <c:if test="${pageContext.request.requestURI ne errorPage}">--%>
-                <%--                <form method="post">--%>
+            <c:if test="${pageContext.request.requestURI ne errorPage}">
+                <form method="post">
                         <%--                    <div class="form-group">--%>
                         <%--                        <select class="form-control" onchange="this.form.submit()" name="local"--%>
                         <%--                                style=" background-color: #353535; color: #118fff; border-color: #118fff; width: 65px; height: 30px; font-size: 10px; position: absolute; top:15px; left: 380px;"--%>
@@ -77,21 +77,21 @@
 
                         <%--                        </select>--%>
 
-                <%--                    <ul class="navbar-nav mr-sm-4 ">--%>
-                <%--                        <li class="nav-item dropdown">--%>
-                <%--                            <a class="nav-link dropdown-toggle" href="#" id="lang" data-toggle="dropdown">--%>
-                <%--                                <fmt:message key="language"/>--%>
-                <%--                            </a>--%>
-                <%--                            <ul class="dropdown-menu">--%>
-                <%--                                <a class="dropdown-item" href="?locale=en"><fmt:message key="english"/> </a>--%>
-                <%--                                <a class="dropdown-item" href="?locale=ru_RU"><fmt:message key="russian"/></a>--%>
-                <%--                            </ul>--%>
-                <%--                        </li>--%>
-                <%--                    </ul>--%>
+                    <ul class="navbar-nav mr-sm-4 ">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="lang" data-toggle="dropdown">
+                                <fmt:message key="language"/>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="dropdown-item" href="?locale=en"><fmt:message key="english"/> </a>
+                                <a class="dropdown-item" href="?locale=ru_RU"><fmt:message key="russian"/></a>
+                            </ul>
+                        </li>
+                    </ul>
 
                         <%--                    </div>--%>
-                <%--                </form>--%>
-                <%--            </c:if>--%>
+                </form>
+            </c:if>
             <c:set var="role" value="${authorizedUser.role.id!=2 and authorizedUser!=null}"/>
             <c:choose>
                 <c:when test="${role}">
