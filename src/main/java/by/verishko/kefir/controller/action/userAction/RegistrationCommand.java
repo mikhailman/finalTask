@@ -38,12 +38,13 @@ public class RegistrationCommand extends UserAction {
             messages.put("url", request.getContextPath() + ConstantsPath.MY_PROFILE);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.sendRedirect(request.getContextPath() + "/main.html");
+            response.sendRedirect(request.getContextPath() + ConstantsPath.MAIN);
 
         } catch (ServiceException e) {
             messages.put(e.getMessage(), e.getMessage());
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
+            logger.error(messages);
         }
     }
 

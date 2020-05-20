@@ -1,6 +1,7 @@
 package by.verishko.kefir.controller.filters;
 
 import by.verishko.kefir.controller.action.Command;
+import by.verishko.kefir.controller.action.adminAction.DisplayAllUsers;
 import by.verishko.kefir.controller.action.userAction.*;
 import by.verishko.kefir.controller.constantspath.ConstantsPath;
 import by.verishko.kefir.entity.User;
@@ -93,6 +94,7 @@ public class SecurityFilter implements Filter {
         adminAction.put(RegistrationCommand.class, "");
         adminAction.put(RegistrPageCommand.class, "");
         adminAction.put(ShowProductCommand.class, "");
+        adminAction.put(DisplayAllUsers.class, "");
 
         // will be complete
 
@@ -105,6 +107,9 @@ public class SecurityFilter implements Filter {
         userAction.put(RegistrationCommand.class, "");
         userAction.put(RegistrPageCommand.class, "");
         userAction.put(ShowProductCommand.class, "");
+        userAction.put(ProfileCommand.class, "");
+        userAction.put(EditProfileCommand.class, "");
+        userAction.put(DeleteProfileCommand.class, "");
         //also will be complete
     }
 }

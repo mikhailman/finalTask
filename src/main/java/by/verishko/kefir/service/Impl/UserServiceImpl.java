@@ -166,6 +166,26 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public boolean deleteUser(User user) throws ServiceException {
+        UserDAO dao = null;
+        if (findUserByEmail(user.getEmail(), user.getPassword()) != null) {
+            try {
+                dao = transaction.createDao(TypeDao.USER);
+            } catch (DAOException e) {
+                throw new ServiceException(e);
+            }
+            try {
+                dao.delete(user.getIdUser());
+                transaction.commit();
+            } catch (DAOException e) {
+                throw new ServiceException(e);
+            }
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Show all users saved in database.
      *

@@ -1,6 +1,7 @@
 package by.verishko.kefir.controller.constantspath;
 
 public final class ConstantsPath {
+    public static final String MAIN = "/main.html";
     public static final String INDEX_PAGE = "/index.jsp";
     public static final String HOME = "/home.html";
     public static final String REGISTRATE_PAGE = "/WEB-INF/jsp/registration.jsp";

@@ -14,12 +14,14 @@
        value="${not empty param.locale ? param.locale : not empty cookie['lang'].value ? cookie['lang'].value : 'en'}"/>
 <fmt:setLocale value="${language}"/>
 
-<fmt:bundle basename="text">
+<fmt:bundle basename="text" prefix="userProfile.">
 
     <html lang="${language}">
+
     <jsp:useBean id="user" scope="request" type="by.verishko.kefir.entity.User"/>
 
     <head>
+        <title><fmt:message key="title.viewProfile"/></title>
         <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -96,79 +98,50 @@
     <div class="container">
             <%--    <div class="row">--%>
         <form action="editProfile.html" role="form" method="post">
-            <h2><fmt:message key="titel.viewProfile"/></h2>
+            <h2><fmt:message key="title.viewProfile"/></h2>
             <label style="background-color: #B82303; font-size: 25px">${unknownError}</label>
 
             <div class="form-group row">
                 <label for="login" class="col-sm-3 control-label"><fmt:message key="fields.login"/></label>
                 <div class="col-sm-9">
                     <input type="text" id="login" class="form-control"
-                           value="${userData.login}" readonly>
+                           value="${user.login}" readonly>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="firstName" class="col-sm-3 control-label"><fmt:message key="fields.firstName"/> </label>
                 <div class="col-sm-9">
                     <input type="text" id="firstName" class="form-control"
-                           value="${userData.name}" readonly>
+                           value="${user.name}" readonly>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="lastName" class="col-sm-3 control-label"><fmt:message key="fields.lastName"/></label>
                 <div class="col-sm-9">
                     <input type="text" id="lastName" class="form-control"
-                           value="${userData.surname}" readonly>
+                           value="${user.surname}" readonly>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="email" class="col-sm-3 control-label"><fmt:message key="fields.email"/></label>
                 <div class="col-sm-9">
                     <input type="email" id="email" class="form-control"
-                           value="${userData.email}" readonly>
+                           value="${user.email}" readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="birthDate" class="col-sm-3 control-label"><fmt:message key="fields.dateOfBirth"/></label>
+                <label for="birthDate" class="col-sm-3 control-label"><fmt:message
+                        key="fields.dateRegistration"/></label>
                 <div class="col-sm-4">
-                    <input type="date" id="birthDate" class="form-control" value="${userData.birthday}"
+                    <input type="date" id="birthDate" class="form-control" value="${user.date_registration}"
                            readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="phoneNumber" class="col-sm-3 control-label"><fmt:message key="fields.phoneNumber"/></label>
+                <label for="phone" class="col-sm-3 control-label"><fmt:message key="fields.phoneNumber"/></label>
                 <div class="col-sm-6">
-                    <input type="phoneNumber" id="phoneNumber"
-                           class="form-control" value="${userData.phoneNumber}" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="country" class="col-sm-3 control-label"><fmt:message key="fields.country"/></label>
-                <div class="col-sm-6">
-                    <input type="country" id="country"
-                           class="form-control" value="${userData.country}" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="passportNumber" class="col-sm-3 control-label"><fmt:message
-                        key="fields.passportNumber"/></label>
-                <div class="col-sm-6">
-                    <input type="passportNumber" id="passportNumber"
-                           class="form-control" value="${userData.passportNumber}" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="passportDate" class="col-sm-3 control-label"><fmt:message
-                        key="fields.passportDateOfIssue"/></label>
-                <div class="col-sm-4">
-                    <input type="date" id="passportDate" class="form-control"
-                           value="${userData.passportDateOfIssue}" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="sex" class="col-sm-3 control-label"><fmt:message key="fields.sex"/></label>
-                <div class="col-sm-4">
-                    <input type="text" id="sex" class="form-control"
-                           value="${userData.gender}" readonly>
+                    <input type="phone" id="phone"
+                           class="form-control" value="${user.phone}" readonly>
                 </div>
             </div>
             <div class="mx-auto-center">
@@ -177,57 +150,57 @@
         </form> <!-- /form -->
             <%--    </div>--%>
 
-        <c:choose>
-            <c:when test="${ empty userData.car}">
-                <form action="addCar.html" role="form" method="post">
-                    <div class="mx-auto-center">
-                        <button type="submit" class="btn btn-primary"><fmt:message key="button.addCar"/></button>
-                    </div>
-                </form>
-            </c:when>
-            <c:otherwise>
-                <form action="editCar.html" role="form" method="post">
-                    <div class="form-group row">
-                        <label for="brand" class="col-sm-3 control-label"><fmt:message key="fields.carBrand"/></label>
-                        <div class="col-sm-9">
-                            <input type="text" id="brand" class="form-control"
-                                   value="${userData.car.brand}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="model" class="col-sm-3 control-label"><fmt:message key="fields.carModel"/> </label>
-                        <div class="col-sm-9">
-                            <input type="text" id="model" class="form-control"
-                                   value="${userData.car.model}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="yearOfProduce" class="col-sm-3 control-label"><fmt:message
-                                key="fields.carYearOfProduce"/></label>
-                        <div class="col-sm-9">
-                            <input type="yearOfProduce" id="yearOfProduce" class="form-control"
-                                   value="${userData.car.yearOfProduce}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="airConditioner" class="col-sm-3 control-label"><fmt:message
-                                key="fields.carClimate"/></label>
-                        <div class="col-sm-9">
-                            <input type="airConditioner" id="airConditioner" class="form-control"
-                                   value="${userData.car.airConditioner}" readonly>
-                        </div>
-                    </div>
-                    <div class="mx-auto-center">
-                        <button type="submit" class="btn btn-primary"><fmt:message key="button.editCar"/></button>
-                    </div>
-                </form>
-                <form action="deleteCar.html" role="form" method="post">
-                    <div class="mx-auto-center">
-                        <button type="submit" class="btn btn-warning"><fmt:message key="button.deleteCar"/></button>
-                    </div>
-                </form>
-            </c:otherwise>
-        </c:choose>
+            <%--        <c:choose>--%>
+            <%--            <c:when test="${ empty user.car}">--%>
+            <%--                <form action="addCar.html" role="form" method="post">--%>
+            <%--                    <div class="mx-auto-center">--%>
+            <%--                        <button type="submit" class="btn btn-primary"><fmt:message key="button.addCar"/></button>--%>
+            <%--                    </div>--%>
+            <%--                </form>--%>
+            <%--            </c:when>--%>
+            <%--            <c:otherwise>--%>
+            <%--                <form action="editCar.html" role="form" method="post">--%>
+            <%--                    <div class="form-group row">--%>
+            <%--                        <label for="brand" class="col-sm-3 control-label"><fmt:message key="fields.carBrand"/></label>--%>
+            <%--                        <div class="col-sm-9">--%>
+            <%--                            <input type="text" id="brand" class="form-control"--%>
+            <%--                                   value="${userData.car.brand}" readonly>--%>
+            <%--                        </div>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="form-group row">--%>
+            <%--                        <label for="model" class="col-sm-3 control-label"><fmt:message key="fields.carModel"/> </label>--%>
+            <%--                        <div class="col-sm-9">--%>
+            <%--                            <input type="text" id="model" class="form-control"--%>
+            <%--                                   value="${userData.car.model}" readonly>--%>
+            <%--                        </div>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="form-group row">--%>
+            <%--                        <label for="yearOfProduce" class="col-sm-3 control-label"><fmt:message--%>
+            <%--                                key="fields.carYearOfProduce"/></label>--%>
+            <%--                        <div class="col-sm-9">--%>
+            <%--                            <input type="yearOfProduce" id="yearOfProduce" class="form-control"--%>
+            <%--                                   value="${userData.car.yearOfProduce}" readonly>--%>
+            <%--                        </div>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="form-group row">--%>
+            <%--                        <label for="airConditioner" class="col-sm-3 control-label"><fmt:message--%>
+            <%--                                key="fields.carClimate"/></label>--%>
+            <%--                        <div class="col-sm-9">--%>
+            <%--                            <input type="airConditioner" id="airConditioner" class="form-control"--%>
+            <%--                                   value="${userData.car.airConditioner}" readonly>--%>
+            <%--                        </div>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="mx-auto-center">--%>
+            <%--                        <button type="submit" class="btn btn-primary"><fmt:message key="button.editCar"/></button>--%>
+            <%--                    </div>--%>
+            <%--                </form>--%>
+            <%--                <form action="deleteCar.html" role="form" method="post">--%>
+            <%--                    <div class="mx-auto-center">--%>
+            <%--                        <button type="submit" class="btn btn-warning"><fmt:message key="button.deleteCar"/></button>--%>
+            <%--                    </div>--%>
+            <%--                </form>--%>
+            <%--            </c:otherwise>--%>
+            <%--        </c:choose>--%>
         <form action="changePassword.html" role="form" method="post">
             <div class="mx-auto-center">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalChangePassword">
@@ -241,7 +214,7 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h2 class="modal-title"><fmt:message key="titel.modalChangePassword"/></h2>
+                            <h2 class="modal-title"><fmt:message key="title.modalChangePassword"/></h2>
                             <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
 
@@ -266,11 +239,11 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="comfirmNewPassword" class="col-sm-3 control-label"><fmt:message
-                                        key="fields.comfirmNewPassword"/>:*</label>
+                                <label for="confirmNewPassword" class="col-sm-3 control-label"><fmt:message
+                                        key="fields.confirmNewPassword"/>:*</label>
                                 <div class="col-sm-9">
-                                    <input type="password" id="comfirmNewPassword" name="comfirmNewPassword"
-                                           placeholder="<fmt:message key="fields.comfirmNewPassword"/>"
+                                    <input type="password" id="confirmNewPassword" name="confirmNewPassword"
+                                           placeholder="<fmt:message key="fields.confirmNewPassword"/>"
                                            class="form-control"
                                            required autofocus pattern="^[\w\dа-яА-Я-+%$@!]{1,50}$">
                                 </div>
@@ -288,7 +261,7 @@
             </div>
         </form>
 
-        <form action="deleteUser.html" role="form" method="post">
+        <form action="deleteProfile.html" role="form" method="post">
             <div class="mx-auto-center">
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelProfile">
                     <fmt:message
@@ -301,7 +274,7 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h2 class="modal-title"><fmt:message key="titel.modalDeleteProfile"/></h2>
+                            <h2 class="modal-title"><fmt:message key="title.modalDeleteProfile"/></h2>
                             <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
 

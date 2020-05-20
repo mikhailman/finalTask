@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class ProfileCommand extends UserAction {
     @Override
-    public void exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, ServletException, IOException {
+    public void exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, ServletException, IOException {
         UserService service = factory.createService(TypeDao.USER);
         User user = (User) request.getSession().getAttribute("authorizedUser");
         user = service.getUser(user.getIdUser());

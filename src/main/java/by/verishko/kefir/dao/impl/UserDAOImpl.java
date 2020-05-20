@@ -27,10 +27,10 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
 
     private static final String SELECT_USER_BY_ID = "SELECT users.name FROM user WHERE id = ?";
 
-    private static final String GET_USER_BY_ID = "SELECT `login`, `name`, `surname`, " +
-            "`email`, `phone`, `date_registration` FROM `users` WHERE `id` = ?";
+    private static final String GET_USER_BY_ID = "SELECT id, users.password, login, name, surname, " +
+            "email, phone, date_registration FROM users WHERE id = ?";
 
-    private static final String DELETE_USER_BY_ID = "DELETE FROM `users` WHERE `id` = ?";
+    private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
 
 //    private static final String DELETE_USER_BY_ID = "UPDATE `users` SET `status` = ? FROM `users` WHERE `id` = ?";
 
@@ -114,7 +114,9 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = new User();
+                user.setIdUser(resultSet.getInt("id"));
                 user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
                 user.setName(resultSet.getString("name"));
                 user.setSurname(resultSet.getString("surname"));
                 user.setEmail(resultSet.getString("email"));

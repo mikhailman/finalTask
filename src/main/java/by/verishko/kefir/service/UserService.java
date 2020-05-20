@@ -18,6 +18,8 @@ public interface UserService extends Service {
     void updateUser(final User newUser, final Integer idUser,
                     final String oldPassword, final String repeatPassword) throws ServiceException;
 
+    boolean deleteUser(final User user) throws ServiceException;
+
     List<User> findAll() throws ServiceException;
 
 }
