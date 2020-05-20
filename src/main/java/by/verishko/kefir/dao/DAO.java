@@ -25,7 +25,7 @@ public interface DAO<Type extends Entity> {
         throw new DAOException();
     }
 
-    default Type update(final Type entity) throws DAOException {
+    default void update(final Type entity) throws DAOException {
         throw new DAOException();
     }
 

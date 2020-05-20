@@ -73,18 +73,18 @@
                 <label style="background-color: #f2f2f2; font-size: 25px">${errorLogin}</label>
             </div>
             <div class="form-group row">
-                <label for="firstName" class="col-sm-3 control-label"><fmt:message key="fields.firstName"/> </label>
+                <label for="name" class="col-sm-3 control-label"><fmt:message key="fields.firstName"/> </label>
                 <div class="col-sm-9">
-                    <input type="text" id="firstName" name="firstName"
+                    <input type="text" id="name" name="name"
                            placeholder="<fmt:message key="fields.firstName"/>" class="form-control"
                            value="${user.name}" required autofocus pattern="^[a-zA-Zа-яА-Я-]{1,255}$">
                 </div>
-                <label style="background-color: #f2f2f2; font-size: 25px">${errorFirstName}</label>
+                <label style="background-color: #f2f2f2; font-size: 25px">${errorName}</label>
             </div>
             <div class="form-group row">
-                <label for="lastName" class="col-sm-3 control-label"><fmt:message key="fields.lastName"/></label>
+                <label for="surname" class="col-sm-3 control-label"><fmt:message key="fields.lastName"/></label>
                 <div class="col-sm-9">
-                    <input type="text" id="lastName" name="lastName" placeholder="<fmt:message key="fields.lastName"/>"
+                    <input type="text" id="surname" name="surname" placeholder="<fmt:message key="fields.lastName"/>"
                            class="form-control" value="${user.surname}" required autofocus
                            pattern="^[a-zA-Zа-яА-Я-]{1,255}$">
                 </div>
@@ -98,21 +98,13 @@
                 </div>
                 <label style="background-color: #f2f2f2; font-size: 25px">${errorEmail}</label>
             </div>
-                <%--            <div class="form-group row">--%>
-                <%--                <label for="birthDate" class="col-sm-3 control-label"><fmt:message key="fields.dateRegistration"/></label>--%>
-                <%--                <div class="col-sm-4">--%>
-                <%--                    <input type="date" id="birthDate" name="birthDate" min="${ds:nowMinusYears(100)}" max="${ds:nowMinusYears(18)}" class="form-control" value="${userData.birthday}"--%>
-                <%--                           required autofocus>--%>
-                <%--                </div>--%>
-                <%--                <label style="background-color: B82303; font-size: 25px">${error}</label>--%>
-                <%--            </div>--%>
             <div class="form-group row">
-                <label for="phoneNumber" class="col-sm-3 control-label"><fmt:message key="fields.phoneNumber"/></label>
+                <label for="phone" class="col-sm-3 control-label"><fmt:message key="fields.phoneNumber"/></label>
                 <div class="col-sm-6">
-                    <input type="phone" id="phoneNumber" name="phone" placeholder="375XXYYYYYYY"
+                    <input type="phone" id="phone" name="phone" placeholder="375XXYYYYYYY"
                            class="form-control" value="${user.phone}" pattern="^[0-9]{7,15}$" required>
                 </div>
-                <label style="background-color: #f2f2f2; font-size: 25px">${errorPhoneNumber}</label>
+                <label style="background-color: #f2f2f2; font-size: 25px">${errorPhone}</label>
             </div>
             <div class="mx-auto-center">
                 <button type="submit" class="btn btn-primary"><fmt:message key="button.save"/></button>
@@ -120,7 +112,7 @@
         </form> <!-- /form -->
             <%--    </div>--%>
 
-        <form action="viewUserProfile.html" role="form" method="post">
+                <form action="profile.html" role="form" method="post">
             <div class="mx-auto-center">
                 <button type="submit" class="btn btn-warning"><fmt:message key="button.cancel"/></button>
             </div>

@@ -35,16 +35,17 @@ public class RegistrationCommand extends UserAction {
             String message = String.format("user \"%d\" is registered in from %s (%s:%s)",
                     user.getIdUser(), request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort());
             logger.info(message);
-            messages.put("url", request.getContextPath() + ConstantsPath.MY_PROFILE);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+//            messages.put("url", request.getContextPath() + ConstantsPath.MY_PROFILE);
+//            response.setContentType("application/json");
+//            response.setCharacterEncoding("UTF-8");
             response.sendRedirect(request.getContextPath() + ConstantsPath.MAIN);
 
         } catch (ServiceException e) {
-            messages.put(e.getMessage(), e.getMessage());
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            logger.error(messages);
+//            messages.put(e.getMessage(), e.getMessage());
+//            response.setContentType("application/json");
+//            response.setCharacterEncoding("UTF-8");
+            logger.error(e);
+            throw new ServiceException(e);
         }
     }
 

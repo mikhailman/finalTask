@@ -27,7 +27,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
 
     private static final String SELECT_USER_BY_ID = "SELECT users.name FROM user WHERE id = ?";
 
-    private static final String GET_USER_BY_ID = "SELECT id, users.password, login, name, surname, " +
+    private static final String GET_USER_BY_ID = "SELECT id, password, login, name, surname, " +
             "email, phone, date_registration FROM users WHERE id = ?";
 
     private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
@@ -35,7 +35,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
 //    private static final String DELETE_USER_BY_ID = "UPDATE `users` SET `status` = ? FROM `users` WHERE `id` = ?";
 
     private static final String UPDATE_USER = "UPDATE users SET login = ?, password = ?," +
-            " email = ?, phone = ?, name = ?, surname = ? WHERE kefir.users.id = ?;";
+            " email = ?, phone = ?, name = ?, surname = ? WHERE id = ?;";
 
     private static final String SELECT_USER_BY_LOGIN_PWD = "SELECT id, login FROM users WHERE login = ? " +
             "and password = ?";
@@ -104,7 +104,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
      *                      with existed in database.
      */
     @Override
-    public Optional<User> read(Integer id) throws DAOException {
+    public Optional<User> read(final Integer id) throws DAOException {
         User user = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -141,20 +141,19 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
      * @return - user with new params.
      */
     @Override
-    public User update(User user) throws DAOException {
+    public void update(final User user) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_USER);
 //            statementUpdateInfoUser(user, statement);
-//            statement.setInt(1, user.getRole().getIdRole());
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());
             statement.setString(4, user.getPhone());
             statement.setString(5, user.getName());
             statement.setString(6, user.getSurname());
-//            statement.setBoolean(8, user.isActiveStatus());
-//            statement.setString(7, user.getDate_registration().toString());
+            statement.setInt(7, user.getIdUser());
+            logger.debug(statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -163,7 +162,6 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             close(statement);
             close(connection);
         }
-        return user;
     }
 
     /**
@@ -172,7 +170,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
      * @param id - identity of removing user.
      */
     @Override
-    public void delete(Integer id) throws DAOException {
+    public void delete(final Integer id) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_USER_BY_ID);
@@ -225,7 +223,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
      *                      with connecting to database.
      */
     @Override
-    public User findUserByLoginAndPassword(String login, String password) throws DAOException {
+    public User findUserByLoginAndPassword(final String login, final String password) throws DAOException {
         User user = null;
         ResultSet resultSet = null;
         PreparedStatement statement = null;
@@ -255,7 +253,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     }
 
     @Override
-    public Boolean readByEmailAndNickname(User user) throws DAOException {
+    public Boolean readByEmailAndNickname(final User user) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(GET_USER_INFO)) {
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getLogin());
@@ -307,7 +305,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
      *                      with connecting to database.
      */
     @Override
-    public Optional<User> findAllUserInfo(Integer id) throws DAOException {
+    public Optional<User> findAllUserInfo(final Integer id) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(GET_ALL_INFO_BY_ID);
@@ -319,7 +317,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
                 if (resultSet.next()) {
                     user = new User();
                     user.setIdUser(resultSet.getInt("id"));
-                    user.setRole(Role.getByIdRole(resultSet.getInt("role")));
+//                    user.setRole(Role.getByIdRole(resultSet.getInt("role")));
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
                     user.setEmail(resultSet.getString("email"));

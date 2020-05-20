@@ -132,12 +132,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     public void updateUser(User newUser, Integer idUser, String oldPassword,
                            String repeatPassword) throws ServiceException {
         UserDAO dao = null;
+        Validator validator = new Validator();
+        validator.validatePassword(oldPassword);
+        validator.validatePassword(repeatPassword);
         try {
             dao = transaction.createDao(TypeDao.USER);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-
         try {
             Optional<User> oldUser = dao.findAllUserInfo(idUser);
             if (oldPassword != null && !oldPassword.isEmpty()) {

@@ -112,6 +112,9 @@ public class CommandFromUriFilter implements Filter {
             case "/editProfile":
                 return new EditProfileCommand();
 
+            case "/updateProfile":
+                return new UpdateProfileCommand();
+
             case "/deleteProfile":
                 return new DeleteProfileCommand();
 
