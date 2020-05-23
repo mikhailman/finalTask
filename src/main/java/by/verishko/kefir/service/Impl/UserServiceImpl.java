@@ -164,6 +164,45 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
+    public void updatePassword(Integer id, String oldPassword, String newPassword, String confirmPassword) throws ServiceException {
+        UserDAO dao = null;
+        Validator validator = new Validator();
+        if (!validator.validatePassword(newPassword)) {
+            throw new ServiceException("invalid password format");
+        }
+        try {
+            User newUser = new User();
+            logger.debug("newUser " + newUser);
+            dao = transaction.createDao(TypeDao.USER);
+            Optional<User> oldUser = dao.findAllUserInfo(id);
+            logger.debug("oldUser from UserServiceImpl " + oldUser);
+            if (oldPassword != null && !oldPassword.isEmpty()) {
+                if (oldUser.isPresent()) {
+                    newUser.setPassword(newPassword);
+                } else {
+                    throw new DAOException("Old value's user not found");
+                }
+            } else if (oldUser.isPresent()) {
+                newUser.setPassword(oldUser.get().getPassword());
+            } else {
+                throw new DAOException();
+            }
+            newUser.setIdUser(oldUser.get().getIdUser());
+            dao.updatePassword(newUser);
+            transaction.commit();
+            logger.debug("user successfully updated");
+        } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                throw new ServiceException(ex);
+            }
+            logger.error(e + "user don't update");
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean deleteUser(final User user) throws ServiceException {
         UserDAO dao = null;
         if (findUserByEmail(user.getEmail(), user.getPassword()) != null) {
