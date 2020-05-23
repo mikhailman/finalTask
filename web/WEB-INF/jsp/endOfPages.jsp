@@ -10,7 +10,7 @@
 <nav class="navbar navbar-expand-sm bg-dark justify-content-end navbar-dark fixed-bottom">
 
     <lu>
-        <pre style="color: #37ff00">
+        <pre style="color: #118fff">
         created by: © <vm:copyright name="Michael"/>
         contacts:
             tel.   +375291577893

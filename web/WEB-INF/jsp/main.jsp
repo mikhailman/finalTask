@@ -29,7 +29,7 @@
     </head>
     <body style="padding-top: 40px; padding-bottom: 120px; color: #820030" background="images/background.jpg">
 
-    <c:import url="headOfPages.jsp"/>
+    <c:import url="/WEB-INF/jsp/headOfPages.jsp"/>
 
     <div class="container" style="background: silver">
         <div class="container" style="background: silver">
@@ -91,7 +91,7 @@
         <%--    <%@ include file="/WEB-INF/jsp/menu.jsp" %>--%>
 
 
-    <c:import url="endOfPages.jsp"/>
+    <c:import url="/WEB-INF/jsp/endOfPages.jsp"/>
 
 
     </body>

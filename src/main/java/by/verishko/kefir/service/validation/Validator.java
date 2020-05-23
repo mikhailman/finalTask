@@ -6,16 +6,13 @@ import java.util.regex.Pattern;
 public class Validator {
     private static final String LOGIN_PATTERN = "^[\\w-]{1,20}$";
     private static final String EMAIL_PATTERN = "\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
-    private static final String PASSWORD_PATTERN = "([\\w]{6,12})";
+    private static final String PASSWORD_PATTERN = "([\\w]{3,12})";
     private static final String PHONE_PATTERN = "^[0-9]{7,15}$";
-
-    private static Pattern pattern;
-    private static Matcher matcher;
 
     private boolean validate(final String value, final String template) {
         if (value != null) {
-            pattern = Pattern.compile(template);
-            matcher = pattern.matcher(value);
+            Pattern pattern = Pattern.compile(template);
+            Matcher matcher = pattern.matcher(value);
             return matcher.find();
         }
         return false;

@@ -1,7 +1,7 @@
 package by.verishko.kefir.controller.filters;
 
 import by.verishko.kefir.controller.action.Command;
-import by.verishko.kefir.controller.action.adminAction.DisplayAllUsers;
+import by.verishko.kefir.controller.action.adminAction.DisplayAllUsersCommand;
 import by.verishko.kefir.controller.action.userAction.*;
 import by.verishko.kefir.controller.constantspath.ConstantsPath;
 import org.apache.logging.log4j.LogManager;
@@ -118,8 +118,11 @@ public class CommandFromUriFilter implements Filter {
             case "/deleteProfile":
                 return new DeleteProfileCommand();
 
+            case "/changePassword":
+                return new ChangePasswordCommand();
+
             case "/displayAllUsers":
-                return new DisplayAllUsers();
+                return new DisplayAllUsersCommand();
 
             case "/showProduct":
                 return new ShowProductCommand();

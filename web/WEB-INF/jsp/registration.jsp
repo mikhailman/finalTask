@@ -85,7 +85,7 @@
             <div class="form-group row">
                 <label for="firstName" class="col-sm-3 control-label"><fmt:message key="fields.firstName"/>*</label>
                 <div class="col-sm-9">
-                    <input type="text" id="firstName" name="firstName"
+                    <input type="text" id="firstName" name="name"
                            placeholder="<fmt:message key="fields.firstName"/> " class="form-control"
                            value="${userFirstName}" required autofocus pattern="^[a-zA-Zа-яА-Я-]{1,255}$">
                     <div class="invalid-feedback"><fmt:message key="errors.fillOutTheField"/></div>
@@ -95,7 +95,7 @@
             <div class="form-group row">
                 <label for="lastName" class="col-sm-3 control-label"><fmt:message key="fields.lastName"/>*</label>
                 <div class="col-sm-9">
-                    <input type="text" id="lastName" name="lastName" placeholder="<fmt:message key="fields.lastName"/>"
+                    <input type="text" id="lastName" name="surname" placeholder="<fmt:message key="fields.lastName"/>"
                            class="form-control"
                            value="${userLastName}" required autofocus pattern="^[a-zA-Zа-яА-Я-]{1,255}$">
                     <div class="invalid-feedback"><fmt:message key="errors.fillOutTheField"/></div>
@@ -135,7 +135,7 @@
             <div class="form-group row">
                 <label for="phoneNumber" class="col-sm-3 control-label"><fmt:message key="fields.phoneNumber"/>*</label>
                 <div class="col-sm-6">
-                    <input type="phoneNumber" id="phoneNumber" name="phoneNumber" placeholder="375XXYYYYYYY"
+                    <input type="phoneNumber" id="phoneNumber" name="phone" placeholder="375XXYYYYYYY"
                            class="form-control" value="${userPhoneNumber}" pattern="^[0-9]{7,15}$" required>
                     <div class="invalid-feedback"><fmt:message key="errors.fillOutTheField"/></div>
                 </div>

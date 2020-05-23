@@ -10,7 +10,7 @@
     <Appenders>
         <File name="TxtFile" fileName="D:/myWorkspace/epam/javaWebDevelopment2/finalTask/logs/logs.log"
               bufferedIO="true">
-            <PatternLayout pattern="${patternfull}"/>
+            <PatternLayout pattern="${patternfull}" charset="UTF-8"/>
         </File>
     </Appenders>
 

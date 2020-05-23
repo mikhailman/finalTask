@@ -20,43 +20,38 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
      */
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
-    /**
-     * The validator provides the different types of checks for a given
-     * parameters.
-     */
-    private Validator validator;
-
     @Override
-    public User registerUser(User user, String repeatPassword) throws ServiceException {
+    public User registerUser(final User user, final String repeatPassword) throws ServiceException {
+        logger.debug("repeatPassword from UserServiceImpl " + repeatPassword);
+        Validator validator = new Validator();
+        if (!validator.validatePassword(repeatPassword)) {
+            throw new ServiceException("Password is not valid");
+        }
         UserDAO dao = null;
         try {
             dao = transaction.createDao(TypeDao.USER);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-        try {
-//            boolean flag = dao.readByEmailAndNickname(user);
-//            if (!flag) {
-//                throw new ServiceException("errorLogin");
-//            }
+            boolean flag = dao.readByEmailAndNickname(user);
+            if (!flag) {
+                throw new ServiceException("errorLogin ");
+            }
 //            String salt = PasswordUtils.getSalt();
 //            String hashPassword = PasswordUtils.generateHashPassword(user.getPassword(), salt);
 //            user.setPassword(hashPassword);
-            user.setRole(user.getRole());
-            logger.debug("UserServiceImpl ROLE " + user.getRole());
-
-//            if (!validator.validatePassword(repeatPassword)) {
-//                throw new ServiceException("Password is not valid");
-//            }
-
-            // TODO: 02.04.2020 добавить валидатор!
-
-// TODO: 07.05.2020 хэширование пароля!
+            user.setRole(Role.USER);
+            logger.debug("UserServiceImpl ROLE = " + user.getRole());
+            logger.debug("repeatPassword " + repeatPassword);
             Integer id;
             id = dao.createUser(user);
+            logger.debug("user from UserService " + user);
             User resultUser = new User();
             resultUser.setIdUser(id);
             resultUser.setRole(user.getRole());
+            resultUser.setName(user.getName());
+            logger.debug("userName from UserService " + user.getName());
+            logger.debug("resultUserName from UserService " + resultUser.getName());
+            resultUser.setSurname(user.getSurname());
+            resultUser.setPhone(user.getPhone());
+            logger.debug("User from UserServiceImpl " + resultUser);
             logger.debug("UserServiceImpl " + resultUser.getRole());
             transaction.commit();
             logger.debug("user successfully registered");
@@ -129,7 +124,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User newUser, Integer idUser, String oldPassword,
+    public void updateUser(final User newUser, final Integer idUser, String oldPassword,
                            String repeatPassword) throws ServiceException {
         UserDAO dao = null;
         Validator validator = new Validator();
@@ -169,7 +164,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(User user) throws ServiceException {
+    public boolean deleteUser(final User user) throws ServiceException {
         UserDAO dao = null;
         if (findUserByEmail(user.getEmail(), user.getPassword()) != null) {
             try {

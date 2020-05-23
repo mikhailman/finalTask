@@ -255,7 +255,6 @@
                             <button type="submit" class="btn btn-danger"><fmt:message
                                     key="button.changePassword"/></button>
                         </div>
-
                     </div>
                 </div>
             </div>

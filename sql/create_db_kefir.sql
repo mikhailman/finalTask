@@ -28,14 +28,15 @@ CREATE TABLE IF NOT EXISTS `kefir`.`users`
      * 1 - администратор (Role.ADMINISTRATOR)
      * 2 - пользователь (Role.USER)
      */
-    `login`             VARCHAR(45)  NOT NULL,
+    `login`             VARCHAR(45)  NOT NULL UNIQUE,
     `password`          VARCHAR(256) NOT NULL,
-    `email`             VARCHAR(256) NOT NULL,
+    `email`             VARCHAR(256) NOT NULL UNIQUE,
     `phone`             BIGINT       NULL,
     `name`              VARCHAR(45)  NULL,
     `surname`           VARCHAR(45)  NULL,
     `status`            TINYINT(1)   NOT NULL DEFAULT 1,
     `date_registration` DATE         NULL,
+#     `date_registration` DATE         NULL DEFAULT CURRENT_TIMESTAMP,  только для TIMESTAMP
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB

@@ -61,19 +61,19 @@ public class UpdateProfileCommand extends UserAction {
      */
     private User getUser(final HttpServletRequest request) {
         String login = request.getParameter("login");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
 //        String password = request.getParameter("password");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
 
         User user = new User();
         user.setLogin(login);
-        user.setName(name);
-        user.setSurname(surname);
 //        user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
+        user.setName(name);
+        user.setSurname(surname);
         return user;
     }
 }

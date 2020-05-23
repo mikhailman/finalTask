@@ -36,13 +36,16 @@ public class LoginCommand extends UserAction {
                 UserService service = factory.createService(TypeDao.USER);
                 logger.debug("UserService from LoginCommand " + service);
                 user = service.findUserByEmail(login, password);
-
-                logger.debug("Finded user from LoginCommand " + user);
-                request.getSession().setAttribute("authorizedUser", user);
-                logger.debug("authorizedUser from session " + request.getSession().getAttribute("authorizedUser"));
-                logger.debug("user detected " + message);
-                logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + request.getContextPath() + ConstantsPath.HOME);
-                response.sendRedirect(request.getContextPath() + "/main.html");
+                if (user.getPassword().equals(password)) {
+                    logger.debug("Finded user from LoginCommand " + user);
+                    request.getSession().setAttribute("authorizedUser", user);
+                    logger.debug("authorizedUser from session " + request.getSession().getAttribute("authorizedUser"));
+                    logger.debug("user detected " + message);
+                    logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + request.getContextPath() + ConstantsPath.HOME);
+                    response.sendRedirect(request.getContextPath() + ConstantsPath.MAIN);
+                } else {
+                    request.getRequestDispatcher(ConstantsPath.ERROR_PAGE).forward(request, response);
+                }
             }
         } catch (ServiceException e) {
             logger.error(e);

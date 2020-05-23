@@ -18,6 +18,10 @@ public interface UserDAO extends DAO<User> {
 
     Optional<User> findAllUserInfo(final Integer id) throws DAOException;
 
+    void updatePassword(User user) throws DAOException;
+
+//    Optional<User> findById(final Integer id) throws DAOException;
+
 
     //  Мы создаем в UserDAO те операции которые можем выполнять мы над юзером!
 

@@ -36,11 +36,11 @@
         </attribute>
     </tag>
 
-    <!--    <function>-->
-    <!--        <name>localeValue</name>-->
-    <!--        <function-class>by.verishko.kefir.view.LocaleTag</function-class>-->
-    <!--        <function-signature>java.lang.String localeValue(java.lang.String, java.lang.String)</function-signature>-->
-    <!--    </function>-->
+    <function>
+        <name>localeValue</name>
+        <function-class>by.verishko.kefir.view.LocaleTag</function-class>
+        <function-signature>java.lang.String localeValue(java.lang.String, java.lang.String)</function-signature>
+    </function>
 
     <function>
         <name>equalsValue</name>

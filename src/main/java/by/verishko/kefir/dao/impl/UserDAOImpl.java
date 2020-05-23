@@ -21,7 +21,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     private static final String CREATE_USER = "INSERT INTO users (login, password, email, " +
             "phone, name, surname) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private static final String GET_USER_INFO = "SELECT users.id FROM users WHERE email = ? OR login = ?";
+    private static final String GET_USER_INFO = "SELECT id FROM users WHERE email = ? OR login = ?";
 
     private static final String SELECT_ALL_USERS = "SELECT id, login, password, email, name, surname FROM `users` AS u WHERE status != 0;";
 
@@ -43,7 +43,9 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     private static final String GET_ALL_INFO_BY_ID = "SELECT id, role, login, password, email, phone, name, " +
             "surname, status, date_registration FROM users WHERE `id` = ?";
 
-    private static final String GET_PASSWORD = "SELECT `id`,`password` FROM kefir.`users` WHERE `email` = ?";
+    private static final String GET_PASSWORD = "SELECT id, password FROM users WHERE email = ?";
+
+    private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
 
     private static final String INSERT_INTO_USERS = "INSERT INTO users(id, login, password, email, phone, name, " +
             "surname, status, date_registration, role) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -121,7 +123,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
                 user.setSurname(resultSet.getString("surname"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPhone(resultSet.getString("phone"));
-                user.setDate_registration(LocalDate.parse(resultSet.getString("date_registration")));
+//                user.setDate_registration(LocalDate.parse(resultSet.getString("date_registration")));
             }
             return Optional.ofNullable(user);
         } catch (SQLException e) {
@@ -325,7 +327,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
                     user.setName(resultSet.getString("name"));
                     user.setSurname(resultSet.getString("surname"));
                     user.setActiveStatus(resultSet.getInt("status"));
-                    user.setDate_registration(LocalDate.parse(resultSet.getString("date_registration")));
+//                    user.setDate_registration(LocalDate.parse(resultSet.getString("date_registration")));
                 }
                 return Optional.ofNullable(user);
             } catch (SQLException e) {
@@ -336,6 +338,30 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             throw new DAOException(e);
         } finally {
             close(connection);
+        }
+    }
+
+    /**
+     * Updates password of the user entity in the database.
+     *
+     * @param user the provided user entity.
+     * @throws DAOException if failed to update user password in the database.
+     */
+    @Override
+    public void updatePassword(final User user) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(UPDATE_USER_PASSWORD);
+            statement.setString(1, user.getPassword());
+            statement.setInt(2, user.getIdUser());
+            logger.debug(statement);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException("Failed to update user password.", e);
+        } finally {
+            close(connection);
+            close(statement);
         }
     }
 }
