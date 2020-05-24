@@ -82,6 +82,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
                     logger.debug("UserServiceImpl " + resultSet.getInt(1));
+
                     return resultSet.getInt(1);
                 } else {
                     logger.error("There is no autoincremented index after trying to add record into table `users`");
