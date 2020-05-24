@@ -114,6 +114,7 @@ public class SecurityFilter implements Filter {
         userAction.put(UpdateProfileCommand.class, "");
         userAction.put(DeleteProfileCommand.class, "");
         userAction.put(ChangePasswordCommand.class, "");
+        userAction.put(ProductListCommand.class, "");
         //also will be complete
     }
 }

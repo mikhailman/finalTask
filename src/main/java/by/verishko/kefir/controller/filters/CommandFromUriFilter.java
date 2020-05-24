@@ -127,6 +127,9 @@ public class CommandFromUriFilter implements Filter {
             case "/showProduct":
                 return new ShowProductCommand();
 
+            case "/listOfProducts":
+                return new ProductListCommand();
+
             default:
                 return new HomeCommand();
         }
