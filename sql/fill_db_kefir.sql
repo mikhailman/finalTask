@@ -5,13 +5,13 @@ INSERT INTO `kefir`.`users`(`id`, `role`, `login`, `password`, `email`, `phone`,
 VALUES (DEFAULT, 1, 'admin', 'password', 'admin@mail.ru', '375292020327', 'valera', 'valerin', DEFAULT, '2019-11-14');
 INSERT INTO `kefir`.`users`(`id`, `role`, `login`, `password`, `email`, `phone`, `name`, `surname`, `status`,
                             `date_registration`)
-VALUES (DEFAULT, 2, 'user1', 'password', 'user1@mail.ru', '375292020328', 'katya', 'katina', DEFAULT, '2019-11-14');
+VALUES (DEFAULT, 2, 'user1', 'password', 'user1@mail.ru', '375292020328', 'katya', 'katina', DEFAULT, DEFAULT);
 INSERT INTO `kefir`.`users`(`id`, `role`, `login`, `password`, `email`, `phone`, `name`, `surname`, `status`,
                             `date_registration`)
-VALUES (DEFAULT, 2, 'user2', 'password', 'user2@mail.ru', '375292020329', 'lera', 'lerina', DEFAULT, '2019-11-14');
+VALUES (DEFAULT, 2, 'user2', 'password', 'user2@mail.ru', '375292020329', 'lera', 'lerina', DEFAULT, DEFAULT);
 INSERT INTO `kefir`.`users`(`id`, `role`, `login`, `password`, `email`, `phone`, `name`, `surname`, `status`,
                             `date_registration`)
-VALUES (DEFAULT, 2, 'user3', 'password', 'user3@mail.ru', '375292020320', 'nina', 'ninina', DEFAULT, '2019-11-14');
+VALUES (DEFAULT, 2, 'user3', 'password', 'user3@mail.ru', '375292020320', 'nina', 'ninina', DEFAULT, DEFAULT);
 INSERT INTO `kefir`.`category` (`id`, `name`)
 VALUES (DEFAULT, 'Бытовая техника');
 INSERT INTO `kefir`.`category` (`id`, `name`)

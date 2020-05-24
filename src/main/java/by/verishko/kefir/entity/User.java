@@ -2,6 +2,7 @@ package by.verishko.kefir.entity;
 
 import by.verishko.kefir.entity.enumEntity.Role;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class User extends Entity {
     private String name;
     private String surname;
     private Boolean activeStatus;
-    private LocalDate date_registration;
+    private Timestamp date_registration;
 
     public Integer getIdUser() {
         return idUser;
@@ -93,11 +94,11 @@ public class User extends Entity {
         }
     }
 
-    public LocalDate getDate_registration() {
+    public Timestamp getDate_registration() {
         return date_registration;
     }
 
-    public void setDate_registration(LocalDate date_registration) {
+    public void setDate_registration(final Timestamp date_registration) {
         this.date_registration = date_registration;
     }
 

@@ -129,14 +129,14 @@
                            value="${user.email}" readonly>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="birthDate" class="col-sm-3 control-label"><fmt:message
-                        key="fields.dateRegistration"/></label>
-                <div class="col-sm-4">
-                    <input type="date" id="birthDate" class="form-control" value="${user.date_registration}"
-                           readonly>
-                </div>
-            </div>
+                <%--            <div class="form-group row">--%>
+                <%--                <label for="createDate" class="col-sm-3 control-label"><fmt:message--%>
+                <%--                        key="fields.dateRegistration"/></label>--%>
+                <%--                <div class="col-sm-4">--%>
+                <%--                    <input type="date" id="createDate" class="form-control" value="${user.date_registration}"--%>
+                <%--                           readonly>--%>
+                <%--                </div>--%>
+                <%--            </div>--%>
             <div class="form-group row">
                 <label for="phone" class="col-sm-3 control-label"><fmt:message key="fields.phoneNumber"/></label>
                 <div class="col-sm-6">

@@ -11,6 +11,7 @@ import by.verishko.kefir.service.validation.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             logger.debug("resultUserName from UserService " + resultUser.getName());
             resultUser.setSurname(user.getSurname());
             resultUser.setPhone(user.getPhone());
+//            resultUser.setDate_registration(LocalDate.now());
             logger.debug("User from UserServiceImpl " + resultUser);
             logger.debug("UserServiceImpl " + resultUser.getRole());
             transaction.commit();

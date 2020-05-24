@@ -7,10 +7,7 @@ import by.verishko.kefir.entity.enumEntity.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +76,8 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             statement.setString(4, user.getPhone());
             statement.setString(5, user.getName());
             statement.setString(6, user.getSurname());
+//            statement.setDate(7, Date.valueOf(user.getDate_registration()));
+//            statement.setInt(8, user.getRole().ordinal());
             statement.executeUpdate();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {

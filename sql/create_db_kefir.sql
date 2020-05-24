@@ -35,8 +35,9 @@ CREATE TABLE IF NOT EXISTS `kefir`.`users`
     `name`              VARCHAR(45)  NULL,
     `surname`           VARCHAR(45)  NULL,
     `status`            TINYINT(1)   NOT NULL DEFAULT 1,
-    `date_registration` DATE         NULL,
-#     `date_registration` DATE         NULL DEFAULT CURRENT_TIMESTAMP,  только для TIMESTAMP
+#     `date_registration` DATE         NULL,
+    `date_registration` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+#      только для TIMESTAMP
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
