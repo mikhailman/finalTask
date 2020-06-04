@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class CommentServiceImpl extends ServiceImpl implements CommentService {
 
-    private static final String REGEX_SENTENCE = "^(?!\\s\\t\\n\\r*$)[A-zА-яЁё0-9,.!@#?:()_\\t\\n\\r ]*$";
+    private static final String REGEX_SENTENCE = "^(?!\\s\\t\\n\\r*$)[A-zА-яЁё0-9,.!@#?:()-_\\t\\n\\r ]*$";
 
     /**
      * Logger of class.
@@ -33,7 +33,7 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
      * @throws ServiceException sql exception.
      */
     @Override
-    public Map<Comment, User> getComment(Integer idProduct) throws ServiceException {
+    public Map<Comment, User> getComment(final Integer idProduct) throws ServiceException {
         try {
             CommentDAO dao = transaction.createDao(TypeDao.COMMENT);
             UserDAO userDAO = transaction.createDao(TypeDao.USER);
@@ -67,7 +67,7 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
      * @throws ServiceException sql exception.
      */
     @Override
-    public void addComment(String idProduct, String commentBody, Integer idUser) throws ServiceException {
+    public void addComment(final String idProduct, final String commentBody, final Integer idUser) throws ServiceException {
         CommentDAO dao = null;
         try {
             dao = transaction.createDao(TypeDao.COMMENT);
@@ -104,7 +104,7 @@ public class CommentServiceImpl extends ServiceImpl implements CommentService {
      * @throws ServiceException sql exception.
      */
     @Override
-    public void deleteComment(String idComment) throws ServiceException {
+    public void deleteComment(final String idComment) throws ServiceException {
         CommentDAO dao = null;
         try {
             dao = transaction.createDao(TypeDao.COMMENT);

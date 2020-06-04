@@ -19,7 +19,8 @@ public enum Role {
         return ordinal();
     }
 
-    public static Role getByIdRole(Integer id) {
-        return Role.values()[id];
+    public static Role getByIdRole(final Integer id) {
+//        return Role.values()[id];
+        return (id == 1) ? ADMINISTRATOR : USER;
     }
 }

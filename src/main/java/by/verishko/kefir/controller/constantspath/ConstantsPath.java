@@ -14,6 +14,7 @@ public final class ConstantsPath {
     public static final String ERROR_PAGE = "/WEB-INF/jsp/error.jsp";
     public static final String MY_PROFILE = "/WEB-INF/jsp/profile.jsp";
     public static final String LIST_OF_USERS_JSP = "/WEB-INF/jsp/listOfUsers.jsp";
+    public static final String LIST_OF_PRODUCTS_JSP = "/WEB-INF/jsp/listOfProducts.jsp";
     public static final String SHOW_PRODUCT_WITH_PARAMETER = "/showProduct.html?product=";
     public static final String MY_PRODUCT_PAGE = "/WEB-INF/jsp/myProducts.jsp";
     public static final String SHOW_PRODUCT = "/WEB-INF/jsp/product.jsp";

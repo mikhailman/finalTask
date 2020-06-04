@@ -3,7 +3,17 @@ package by.verishko.kefir.service;
 import by.verishko.kefir.entity.Product;
 import by.verishko.kefir.service.exception.ServiceException;
 
+import java.util.List;
+
 public interface ProductService extends Service {
+
+    /**
+     * get list all products.
+     *
+     * @return list with products that found
+     * @throws ServiceException no validate parameter.
+     */
+    List<Product> read() throws ServiceException;
 
     /**
      * create product.
@@ -21,7 +31,7 @@ public interface ProductService extends Service {
      * @return product that found
      * @throws ServiceException sql exception.
      */
-    Product getProduct(final Integer idUser) throws ServiceException;
+    Product getProduct(final Integer idProduct, final Integer idUser) throws ServiceException;
 
     /**
      * Update product

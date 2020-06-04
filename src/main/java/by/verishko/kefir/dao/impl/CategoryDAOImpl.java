@@ -12,11 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CategoryDAOImpl extends BaseDao implements CategoryDAO {
 
     private static final String READ_ALL = "SELECT id, name from category ORDER BY name";
     private static final String CREATE_CATEGORY = "INSERT INTO category (name) VALUES (?)";
+    private static final String GET_CATEGORY = "SELECT name FROM category WHERE category.name = ?";
 
     /**
      * Logger of class.
@@ -24,7 +26,7 @@ public class CategoryDAOImpl extends BaseDao implements CategoryDAO {
     private final Logger logger = LogManager.getLogger(getClass().getName());
 
     @Override
-    public Integer createCategory(Category category) throws DAOException {
+    public Integer createCategory(final Category category) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(CREATE_CATEGORY, Statement.RETURN_GENERATED_KEYS);
@@ -69,6 +71,30 @@ public class CategoryDAOImpl extends BaseDao implements CategoryDAO {
         } finally {
             close(statement);
             close(connection);
+        }
+    }
+
+    @Override
+    public Optional<Integer> read(String name) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(GET_CATEGORY);
+            statement.setString(1, name);
+            try {
+                Integer id = null;
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+                return Optional.ofNullable(id);
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(connection);
+            close(statement);
         }
     }
 }

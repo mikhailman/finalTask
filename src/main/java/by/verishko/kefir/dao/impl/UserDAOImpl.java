@@ -20,7 +20,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
 
     private static final String GET_USER_INFO = "SELECT id FROM users WHERE email = ? OR login = ?";
 
-    private static final String SELECT_ALL_USERS = "SELECT id, login, password, email, name, surname FROM `users` AS u WHERE status != 0;";
+    private static final String SELECT_ALL_USERS = "SELECT id, role, login, password, email, phone, name, surname FROM kefir.users";
 
     private static final String SELECT_USER_BY_ID = "SELECT users.name FROM user WHERE id = ?";
 
@@ -40,7 +40,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
     private static final String GET_ALL_INFO_BY_ID = "SELECT id, role, login, password, email, phone, name, " +
             "surname, status, date_registration FROM users WHERE `id` = ?";
 
-    private static final String GET_PASSWORD = "SELECT id, password FROM users WHERE email = ?";
+    private static final String GET_PASSWORD = "SELECT id, password, role, login, phone, name, surname FROM users WHERE email = ?";
 
     private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
 
@@ -202,9 +202,11 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
                 while (resultSet.next()) {
                     User user = new User();
                     user.setIdUser(Integer.parseInt(resultSet.getString("id")));
+                    user.setRole(Role.getByIdRole(resultSet.getInt("role")));
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
                     user.setEmail(resultSet.getString("email"));
+                    user.setPhone(resultSet.getString("phone"));
                     user.setName(resultSet.getString("name"));
                     user.setSurname(resultSet.getString("surname"));
                     users.add(user);
@@ -214,6 +216,7 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
             logger.error(e);
             throw new DAOException(e);
         }
+        logger.debug("UsersList " + users);
         return users;
     }
 
@@ -285,6 +288,13 @@ public class UserDAOImpl extends BaseDao implements UserDAO {
                     logger.debug("Resultset getPassword " + resultSet);
                     user.setIdUser(resultSet.getInt("id"));
                     user.setPassword(resultSet.getString("password"));
+                    user.setRole(Role.getByIdRole(resultSet.getInt("role")));
+                    user.setLogin(resultSet.getString("login"));
+                    user.setEmail(email);
+                    user.setPhone(resultSet.getString("phone"));
+                    user.setName(resultSet.getString("name"));
+                    user.setSurname(resultSet.getString("surname"));
+//                    user.setActiveStatus(resultSet.getInt("status"));
                 }
                 logger.debug("User from UserDAOImpl " + user);
                 return Optional.ofNullable(user);

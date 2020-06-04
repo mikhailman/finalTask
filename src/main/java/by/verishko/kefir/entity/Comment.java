@@ -6,8 +6,8 @@ public class Comment extends Entity {
     private Integer idComment;
     private String name;
     private String commentText;
-    private int user_id;
-    private int product_id;
+    private Integer user_id;
+    private Integer product_id;
 
     public Integer getIdComment() {
         return idComment;
@@ -37,7 +37,7 @@ public class Comment extends Entity {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(final Integer user_id) {
         this.user_id = user_id;
     }
 
@@ -45,7 +45,7 @@ public class Comment extends Entity {
         return product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(final Integer product_id) {
         this.product_id = product_id;
     }
 
@@ -55,8 +55,8 @@ public class Comment extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Comment comment = (Comment) o;
-        return user_id == comment.user_id &&
-                product_id == comment.product_id &&
+        return user_id.equals(comment.user_id) &&
+                product_id.equals(comment.product_id) &&
                 idComment.equals(comment.idComment) &&
                 name.equals(comment.name) &&
                 commentText.equals(comment.commentText);

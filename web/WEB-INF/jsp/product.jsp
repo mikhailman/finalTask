@@ -49,11 +49,12 @@
                 <br>
                 <div class="text-right"><fmt:formatDate value="${product.date_creation}"
                                                         type="date" pattern="dd-MM-yyyy HH:mm"/></div>
+                <h6>Name: ${product.name}</h6><br>
+
                 <h6>Description: ${product.description} </h6><br>
 
                 <h6>Price: ${product.price}</h6><br>
 
-                <h6>Year: ${product.category_id}</h6><br>
             </div>
         </div>
         <br>

@@ -60,40 +60,6 @@
     <body style="padding-top: 40px; padding-bottom: 120px; color: #820030" background="images/background.jpg">
     <c:import url="headOfPages.jsp"/>
 
-        <%--    <div class="text-center" style="margin-top:30px;margin-right: 20px">--%>
-        <%--        <h1 class="display-4">Profile</h1>--%>
-        <%--        <br>--%>
-        <%--    </div>--%>
-        <%--    <div class="row col-md-12">--%>
-        <%--        <div class="col-md-2"></div>--%>
-        <%--        <div class="col-md-6">--%>
-        <%--            <br>--%>
-        <%--            <h5>First name: ${user.name}</h5>--%>
-        <%--            <br>--%>
-        <%--            <h5>Last name: ${user.surname}</h5>--%>
-        <%--            <br>--%>
-        <%--            <h5>Nickname: ${user.login}</h5>--%>
-        <%--            <br>--%>
-        <%--            <h5>Phone : ${user.phone}</h5>--%>
-        <%--            <br>--%>
-        <%--            <h5>Email: ${user.email}</h5>--%>
-        <%--            <br>--%>
-        <%--            <h5>Email: ${user.date_registration}</h5>--%>
-        <%--            <br>--%>
-        <%--            <h5>Email: ${user.role}</h5>--%>
-        <%--            <br>--%>
-        <%--        </div>--%>
-        <%--        <div class="col-md-2"></div>--%>
-        <%--        <div class="col-md-3">--%>
-        <%--            <a class="btn btn-outline-primary" style="margin-left: 19%"--%>
-        <%--               href="${pageContext.request.contextPath}/editProfile.html">Update profile</a>--%>
-        <%--        </div>--%>
-        <%--        <div class="btn-group">--%>
-        <%--            <a class="btn btn-primary"--%>
-        <%--               href="${pageContext.request.contextPath}/myProducts.html">My products</a>--%>
-        <%--        </div>--%>
-        <%--    </div>--%>
-
 
     <div class="container">
             <%--    <div class="row">--%>
@@ -147,60 +113,7 @@
             <div class="mx-auto-center">
                 <button type="submit" class="btn btn-primary"><fmt:message key="button.editProfile"/></button>
             </div>
-        </form> <!-- /form -->
-            <%--    </div>--%>
-
-            <%--        <c:choose>--%>
-            <%--            <c:when test="${ empty user.car}">--%>
-            <%--                <form action="addCar.html" role="form" method="post">--%>
-            <%--                    <div class="mx-auto-center">--%>
-            <%--                        <button type="submit" class="btn btn-primary"><fmt:message key="button.addCar"/></button>--%>
-            <%--                    </div>--%>
-            <%--                </form>--%>
-            <%--            </c:when>--%>
-            <%--            <c:otherwise>--%>
-            <%--                <form action="editCar.html" role="form" method="post">--%>
-            <%--                    <div class="form-group row">--%>
-            <%--                        <label for="brand" class="col-sm-3 control-label"><fmt:message key="fields.carBrand"/></label>--%>
-            <%--                        <div class="col-sm-9">--%>
-            <%--                            <input type="text" id="brand" class="form-control"--%>
-            <%--                                   value="${userData.car.brand}" readonly>--%>
-            <%--                        </div>--%>
-            <%--                    </div>--%>
-            <%--                    <div class="form-group row">--%>
-            <%--                        <label for="model" class="col-sm-3 control-label"><fmt:message key="fields.carModel"/> </label>--%>
-            <%--                        <div class="col-sm-9">--%>
-            <%--                            <input type="text" id="model" class="form-control"--%>
-            <%--                                   value="${userData.car.model}" readonly>--%>
-            <%--                        </div>--%>
-            <%--                    </div>--%>
-            <%--                    <div class="form-group row">--%>
-            <%--                        <label for="yearOfProduce" class="col-sm-3 control-label"><fmt:message--%>
-            <%--                                key="fields.carYearOfProduce"/></label>--%>
-            <%--                        <div class="col-sm-9">--%>
-            <%--                            <input type="yearOfProduce" id="yearOfProduce" class="form-control"--%>
-            <%--                                   value="${userData.car.yearOfProduce}" readonly>--%>
-            <%--                        </div>--%>
-            <%--                    </div>--%>
-            <%--                    <div class="form-group row">--%>
-            <%--                        <label for="airConditioner" class="col-sm-3 control-label"><fmt:message--%>
-            <%--                                key="fields.carClimate"/></label>--%>
-            <%--                        <div class="col-sm-9">--%>
-            <%--                            <input type="airConditioner" id="airConditioner" class="form-control"--%>
-            <%--                                   value="${userData.car.airConditioner}" readonly>--%>
-            <%--                        </div>--%>
-            <%--                    </div>--%>
-            <%--                    <div class="mx-auto-center">--%>
-            <%--                        <button type="submit" class="btn btn-primary"><fmt:message key="button.editCar"/></button>--%>
-            <%--                    </div>--%>
-            <%--                </form>--%>
-            <%--                <form action="deleteCar.html" role="form" method="post">--%>
-            <%--                    <div class="mx-auto-center">--%>
-            <%--                        <button type="submit" class="btn btn-warning"><fmt:message key="button.deleteCar"/></button>--%>
-            <%--                    </div>--%>
-            <%--                </form>--%>
-            <%--            </c:otherwise>--%>
-            <%--        </c:choose>--%>
+        </form>
         <form action="changePassword.html" role="form" method="post">
             <div class="mx-auto-center">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalChangePassword">
@@ -300,9 +213,7 @@
                     </div>
                 </div>
             </div>
-
         </form>
-    </div>
     </div> <!-- ./container -->
     <c:import url="endOfPages.jsp"/>
 

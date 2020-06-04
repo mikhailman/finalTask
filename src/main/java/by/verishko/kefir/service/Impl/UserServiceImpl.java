@@ -240,6 +240,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
         }
         try {
             userList = dao.findAll();
+            logger.debug("userList " + userList);
             transaction.commit();
         } catch (DAOException e) {
             logger.error(e);
@@ -250,6 +251,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             }
             throw new ServiceException(e);
         }
+        logger.debug("userList " + userList);
         return userList;
     }
 }

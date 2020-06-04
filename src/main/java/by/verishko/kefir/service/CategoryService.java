@@ -11,7 +11,7 @@ public interface CategoryService extends Service {
      * Get category.
      *
      * @return list category.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     List<Category> getCategory() throws ServiceException;
 }

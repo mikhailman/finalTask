@@ -147,6 +147,15 @@ public class UserServiceImplTest {
         userService.findUserByEmail(email, password);
     }
 
+    @Test(description = "Positive scenario of update password method",
+            priority = 9)
+    public void testPositiveUpdatePassword() throws Exception {
+        userService.updatePassword(16, "password", "Banana@22", "Banana@22");
+        User actual = userService.getUser(16);
+        User expectedUser = fillUserForUpdate(0);
+        Assert.assertEquals(actual, expectedUser);
+    }
+
     private User fillUserForUpdate(Integer number) {
         User user = new User();
         user.setName("Name");

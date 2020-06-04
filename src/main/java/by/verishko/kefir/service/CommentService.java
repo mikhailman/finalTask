@@ -13,17 +13,17 @@ public interface CommentService extends Service {
      *
      * @param idProduct integer id product.
      * @return map with user info and his comment.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     Map<Comment, User> getComment(final Integer idProduct) throws ServiceException;
 
     /**
-     * Add comment to announcement.
+     * Add comment to product.
      *
      * @param idProduct id product.
      * @param comment   comment text.
      * @param idUser    id user.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     void addComment(final String idProduct, final String comment, final Integer idUser) throws ServiceException;
 
@@ -31,7 +31,7 @@ public interface CommentService extends Service {
      * delete comment by id user .
      *
      * @param idComment id comment.
-     * @throws DAOException sql exception.
+     * @throws ServiceException sql exception.
      */
     void deleteComment(final String idComment) throws ServiceException;
 }

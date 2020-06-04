@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `kefir`.`products`
     `name`          VARCHAR(100)   NULL,
     `description`   VARCHAR(2000)  NULL,
     `price`         DECIMAL(10, 0) NULL,
-    `date_creation` DATE           NULL,
+    `date_creation` TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `users_id`      INT(11)        NOT NULL,
     `category_id`   INT(11)        NOT NULL,
     `location_id`   INT(11)        NOT NULL,

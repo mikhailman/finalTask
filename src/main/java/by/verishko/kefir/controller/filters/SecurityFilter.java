@@ -94,9 +94,12 @@ public class SecurityFilter implements Filter {
         adminAction.put(ProfileCommand.class, "");
         adminAction.put(RegistrationCommand.class, "");
         adminAction.put(RegistrPageCommand.class, "");
+        adminAction.put(EditProfileCommand.class, "");
+        adminAction.put(UpdateProfileCommand.class, "");
         adminAction.put(ShowProductCommand.class, "");
         adminAction.put(DisplayAllUsersCommand.class, "");
         adminAction.put(ChangePasswordCommand.class, "");
+        adminAction.put(ProductListCommand.class, "");
 
         // will be complete
 
@@ -106,10 +109,10 @@ public class SecurityFilter implements Filter {
         userAction.put(LoginPageCommand.class, "");
         userAction.put(LogoutCommand.class, "");
         userAction.put(MenuCommand.class, "");
+        userAction.put(ProfileCommand.class, "");
         userAction.put(RegistrationCommand.class, "");
         userAction.put(RegistrPageCommand.class, "");
         userAction.put(ShowProductCommand.class, "");
-        userAction.put(ProfileCommand.class, "");
         userAction.put(EditProfileCommand.class, "");
         userAction.put(UpdateProfileCommand.class, "");
         userAction.put(DeleteProfileCommand.class, "");

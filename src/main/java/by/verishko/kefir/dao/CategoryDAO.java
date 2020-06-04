@@ -12,5 +12,5 @@ public interface CategoryDAO extends DAO<Category> {
 
     Integer createCategory(final Category comment) throws DAOException;
 
-//    Optional<Integer> read(final String name) throws DAOException;
+    Optional<Integer> read(final String name) throws DAOException;
 }

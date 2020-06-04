@@ -1,6 +1,7 @@
 package by.verishko.kefir.entity;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class Product extends Entity {
     private String name;
     private String description;
     private BigDecimal price;
-    private LocalDate date_creation;
+    private Timestamp date_creation;
     private int user_id;
     private int category_id;
     private int location_id;
@@ -46,11 +47,11 @@ public class Product extends Entity {
         this.price = price;
     }
 
-    public LocalDate getDate_creation() {
+    public Timestamp getDate_creation() {
         return date_creation;
     }
 
-    public void setDate_creation(LocalDate date_creation) {
+    public void setDate_creation(final Timestamp date_creation) {
         this.date_creation = date_creation;
     }
 

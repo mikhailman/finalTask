@@ -121,7 +121,7 @@ public class CommandFromUriFilter implements Filter {
             case "/changePassword":
                 return new ChangePasswordCommand();
 
-            case "/displayAllUsers":
+            case "/listOfUsers":
                 return new DisplayAllUsersCommand();
 
             case "/showProduct":

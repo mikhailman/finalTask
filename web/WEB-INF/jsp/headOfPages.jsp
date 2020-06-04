@@ -47,13 +47,13 @@
                                 key="mainPage.button.home"/></button>
                     </form>
                     <c:choose>
-                        <c:when test="${authorizedUser.role.idRole == 2}">
+                        <c:when test="${authorizedUser.role.idRole == 1}">
                             <form action="addProduct.html" method="post">
                                 <button class="dropdown-item" type="submit"><fmt:message
                                         key="mainPage.button.addProduct"/></button>
                             </form>
                         </c:when>
-                        <c:when test="${authorizedUser.role.idRole == 1}">
+                        <c:when test="${authorizedUser.role.idRole == 0}">
                             <form action="listOfUsers.html" method="post">
                                 <button class="dropdown-item" type="submit"><fmt:message
                                         key="mainPage.button.allUsers"/></button>

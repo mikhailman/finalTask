@@ -22,7 +22,8 @@ public class ShowProductCommand extends UserAction {
         ProductService service = factory.createService(TypeDao.PRODUCT);
         CommentService commentService = factory.createService(TypeDao.COMMENT);
         User user = (User) request.getSession().getAttribute("authorizedUser");
-        Product product = service.getProduct(user.getIdUser());
+        String idProduct = request.getParameter("product");
+        Product product = service.getProduct(Integer.valueOf(idProduct), user.getIdUser());
         Map<Comment, User> mapComment = commentService.getComment(product.getIdProduct());
         request.setAttribute("mapComment", mapComment);
         request.setAttribute("product", product);

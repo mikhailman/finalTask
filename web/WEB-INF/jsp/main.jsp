@@ -34,46 +34,100 @@
     <div class="container" style="background: silver">
         <div class="container" style="background: silver">
             <div class="row" style="position:center">
-                <div class="col-sm-1">
-                </div>
+                    <%--                <div class="col-sm-1">--%>
+                    <%--                </div>--%>
 
-                <div class="col-sm-10">
-                    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active" data-interval="4000">
-                                <img src="images/sc1.jpg" class="img-thumbnail" alt="Cinque Terre">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h2></h2>
-                                </div>
-                            </div>
-                            <div class="carousel-item" data-interval="4000">
-                                <img src="images/sc2.jpg" class="img-thumbnail" alt="Cinque Terre">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h2></h2>
-                                </div>
-                            </div>
-                            <div class="carousel-item" data-interval="4000">
-                                <img src="images/sc3.jpg" class="img-thumbnail" alt="Cinque Terre">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h2></h2>
-                                </div>
+                    <%--                <div class="col-sm-12">--%>
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-interval="4000">
+                            <img src="images/sc1.jpg" class="img-thumbnail" alt="Cinque Terre">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2></h2>
                             </div>
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        <div class="carousel-item" data-interval="4000">
+                            <img src="images/sc2.jpg" class="img-thumbnail" alt="Cinque Terre">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2></h2>
+                            </div>
+                        </div>
+                        <div class="carousel-item" data-interval="4000">
+                            <img src="images/sc3.jpg" class="img-thumbnail" alt="Cinque Terre">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2></h2>
+                            </div>
+                        </div>
                     </div>
+                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <div class="col-sm-1">
-                </div>
+                    <%--                </div>--%>
+                    <%--                <div class="col-sm-1">--%>
+                    <%--                </div>--%>
             </div>
 
             <div class="container" style="background: silver">
+
+                    <%--                <div class="row">--%>
+
+                    <%--                    <c:choose>--%>
+
+                    <%--                        <c:when test="${ sessionScope.authorizedUser.role == USER }">--%>
+                    <%--                            <form action="listOfProducts.html" method="get">--%>
+                    <%--                                <div class="col-sm-4">--%>
+                    <%--                                </div>--%>
+                    <%--                                <div class="col-sm-12">--%>
+                    <%--                                    <button type="submit" class="btn btn-warning btn-lg btn-block"><fmt:message--%>
+                    <%--                                            key="button.moreSuggestions"/>--%>
+                    <%--                                    </button>--%>
+                    <%--                                </div>--%>
+                    <%--                                <div class="col-sm-4">--%>
+                    <%--                                </div>--%>
+                    <%--                            </form>--%>
+                    <%--                        </c:when>--%>
+
+                    <%--                        <c:when test="${ sessionScope.authorizedUser.role == ADMINISTRATOR }">--%>
+                    <%--                            <form action="listOfUsers.html" method="get">--%>
+                    <%--                                <div class="col-sm-4">--%>
+                    <%--                                </div>--%>
+                    <%--                                <div class="col-sm-12">--%>
+                    <%--                                    <button type="submit" class="btn btn-warning btn-lg btn-block"><fmt:message--%>
+                    <%--                                            key="button.moreSuggestions"/>--%>
+                    <%--                                    </button>--%>
+                    <%--                                </div>--%>
+                    <%--                                <div class="col-sm-4">--%>
+                    <%--                                </div>--%>
+                    <%--                            </form>--%>
+                    <%--                        </c:when>--%>
+
+                    <%--                        &lt;%&ndash;                        <c:when test="${ sessionScope.authorizedUser == null }">&ndash;%&gt;--%>
+
+                    <%--                        &lt;%&ndash;                        </c:when>&ndash;%&gt;--%>
+
+                    <%--                        <c:otherwise>--%>
+                    <%--                            <form action="listOfProducts.html" method="get">--%>
+                    <%--                                <div class="col-sm-4">--%>
+                    <%--                                </div>--%>
+                    <%--                                <div class="col-sm-12">--%>
+                    <%--                                    <button type="submit" class="btn btn-warning btn-lg btn-block"><fmt:message--%>
+                    <%--                                            key="button.moreSuggestions"/>--%>
+                    <%--                                    </button>--%>
+                    <%--                                </div>--%>
+                    <%--                                <div class="col-sm-4">--%>
+                    <%--                                </div>--%>
+                    <%--                            </form>--%>
+                    <%--                        </c:otherwise>--%>
+
+                    <%--                    </c:choose>--%>
+                    <%--                </div>--%>
+
                 <form action="listOfProducts.html" method="get">
                     <div class="col-sm-4">
                     </div>
@@ -88,7 +142,6 @@
             </div>
         </div>
     </div>
-        <%--    <%@ include file="/WEB-INF/jsp/menu.jsp" %>--%>
 
 
     <c:import url="/WEB-INF/jsp/endOfPages.jsp"/>
